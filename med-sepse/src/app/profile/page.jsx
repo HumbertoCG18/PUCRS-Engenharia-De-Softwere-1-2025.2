@@ -1,5 +1,5 @@
 // src/app/profile/page.jsx
-import { Button } from "@/components/ui/button";
+import { Button } from "@/components/ui/Button";
 import { User, Settings, ShieldCheck, LogOut } from "lucide-react";
 
 export default function ProfilePage() {
