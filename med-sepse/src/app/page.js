@@ -1,9 +1,8 @@
 // src/app/page.js
 import BottomNav from '@/components/layout/BottomNav';
-import DailyTracker from '@/components/home/DailyTracker';
 import GameModes from '@/components/home/GameModes';
 import { ThemeSwitcher } from '@/components/ui/ThemeSwitcher';
-import GamificationStats from '@/components/home/GamificationStats'; // 1. Importar o novo componente
+import PlayerDashboard from '@/components/home/PlayerDashboard';
 
 export default function Home() {
   return (
@@ -17,9 +16,9 @@ export default function Home() {
           <ThemeSwitcher />
         </header>
 
-        <GamificationStats />
+        {/* 2. Substituir os dois componentes antigos pelo PlayerDashboard */}
+        <PlayerDashboard />
 
-        <DailyTracker />
         <GameModes />
 
         <div className="h-32" />
