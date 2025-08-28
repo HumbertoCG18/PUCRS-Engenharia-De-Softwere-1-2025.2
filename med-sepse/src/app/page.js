@@ -18,6 +18,7 @@ export default function Home() {
           </header>
           <DailyTracker />
           <GameModes />
+            <div className="h-10" />
         </div>
       </main>
       

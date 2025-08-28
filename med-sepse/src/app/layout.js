@@ -30,9 +30,8 @@ export default function RootLayout({ children }) {
           enableSystem
           disableTransitionOnChange
         >
-          <div className="flex flex-col min-h-screen">
-            <main className="flex-grow px-6 sm:px-8">{children}</main>
-          </div>
+          {/* Apenas renderiza os filhos, sem divs ou classes de layout extras */}
+          {children}
         </ThemeProvider>
       </body>
     </html>
