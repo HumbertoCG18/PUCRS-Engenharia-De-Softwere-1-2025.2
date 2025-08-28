@@ -1,0 +1,1 @@
+export default function CompendioPage() { return <h1>Compêndio de Sepse</h1>; }
