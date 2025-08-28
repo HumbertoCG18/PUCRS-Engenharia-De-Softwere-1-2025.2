@@ -1,7 +1,7 @@
 // src/app/layout.js
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
-import { ThemeProvider } from "@/components/ThemeProvider"; // Importe o ThemeProvider
+import { ThemeProvider } from "@/components/ThemeProvider";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -14,25 +14,27 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata = {
-  title: "MedSeps", // Vamos atualizar o título
+  title: "MedSeps",
   description: "Plataforma gamificada para ensino de detecção de sepse.",
 };
 
 export default function RootLayout({ children }) {
   return (
-    // Adicionado suppressHydrationWarning para evitar avisos com o next-themes
     <html lang="en" suppressHydrationWarning>
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
-        {/* Envolva o {children} com o ThemeProvider */}
         <ThemeProvider
           attribute="class"
           defaultTheme="system"
           enableSystem
           disableTransitionOnChange
         >
-          {children}
+          {/* Adicionamos um container flex que gerencia a altura */}
+          <div className="flex flex-col min-h-screen">
+            {/* A classe 'flex-grow' faz esta área se expandir para preencher o espaço */}
+            <main className="flex-grow">{children}</main>
+          </div>
         </ThemeProvider>
       </body>
     </html>
