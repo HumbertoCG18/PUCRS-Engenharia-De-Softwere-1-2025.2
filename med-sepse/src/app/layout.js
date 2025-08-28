@@ -2,6 +2,7 @@
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import { ThemeProvider } from "@/components/ThemeProvider";
+import BottomNav from "@/components/layout/BottomNav"; // 1. Importar a BottomNav aqui
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -30,8 +31,11 @@ export default function RootLayout({ children }) {
           enableSystem
           disableTransitionOnChange
         >
-          {/* Apenas renderiza os filhos, sem divs ou classes de layout extras */}
+          {/* O conteúdo da página é renderizado aqui */}
           {children}
+          
+          {/* 2. A BottomNav agora é parte do layout raiz e aparecerá em todas as páginas */}
+          <BottomNav />
         </ThemeProvider>
       </body>
     </html>

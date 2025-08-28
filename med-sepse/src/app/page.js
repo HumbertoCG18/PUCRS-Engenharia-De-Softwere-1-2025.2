@@ -1,5 +1,4 @@
 // src/app/page.js
-import BottomNav from '@/components/layout/BottomNav';
 import GameModes from '@/components/home/GameModes';
 import { ThemeSwitcher } from '@/components/ui/ThemeSwitcher';
 import PlayerDashboard from '@/components/home/PlayerDashboard';
@@ -23,7 +22,6 @@ export default function Home() {
 
         <div className="h-32" />
       </div>
-      <BottomNav />
     </>
   );
 }
