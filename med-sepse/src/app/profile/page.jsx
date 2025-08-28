@@ -13,11 +13,11 @@ export default function ProfilePage() {
     <div className="font-sans min-h-screen p-6 sm:p-8">
       <div className="w-full max-w-2xl mx-auto space-y-8">
         <header className="flex items-center space-x-4">
-          <div className="w-16 h-16 bg-blue-500 rounded-full flex items-center justify-center">
+          <div className="w-16 h-16 bg-blue-500 rounded-full flex items-center justify-center flex-shrink-0">
             <User className="w-8 h-8 text-white" />
           </div>
           <div>
-            <h1 className="text-2xl font-bold">{user.name}</h1>
+            <h1 className="text-xl sm:text-2xl font-bold">{user.name}</h1>
             <p className="text-foreground/80">{user.level}</p>
           </div>
         </header>

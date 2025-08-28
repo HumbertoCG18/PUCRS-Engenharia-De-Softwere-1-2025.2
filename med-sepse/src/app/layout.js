@@ -30,10 +30,8 @@ export default function RootLayout({ children }) {
           enableSystem
           disableTransitionOnChange
         >
-          {/* Adicionamos um container flex que gerencia a altura */}
           <div className="flex flex-col min-h-screen">
-            {/* A classe 'flex-grow' faz esta área se expandir para preencher o espaço */}
-            <main className="flex-grow">{children}</main>
+            <main className="flex-grow px-6 sm:px-8">{children}</main>
           </div>
         </ThemeProvider>
       </body>
