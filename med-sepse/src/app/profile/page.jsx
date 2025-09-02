@@ -1,6 +1,8 @@
 // src/app/profile/page.jsx
 import { Button } from "@/components/ui/button";
 import { User, Settings, ShieldCheck, LogOut } from "lucide-react";
+import { Plug } from 'lucide-react';
+
 
 export default function ProfilePage() {
   const user = {
@@ -22,18 +24,14 @@ export default function ProfilePage() {
           </div>
         </header>
 
-        <div className="p-6 bg-black/[.05] dark:bg-white/[.06] rounded-lg">
-          <h2 className="text-lg font-semibold mb-4">Estatísticas</h2>
-          <div className="flex justify-between items-center">
-            <span className="text-foreground/80">Pontuação Total</span>
-            <span className="font-bold text-xl text-blue-500">{user.points} pts</span>
-          </div>
-        </div>
-
         <div className="space-y-2">
             <Button variant="ghost" className="w-full justify-start">
                 <Settings className="w-4 h-4 mr-2" />
                 Configurações
+          </Button>
+            <Button variant="ghost" className="w-full justify-start">
+                <Plug className="w-4 h-4 mr-2" />
+                Conexões
             </Button>
             <Button variant="ghost" className="w-full justify-start">
                 <ShieldCheck className="w-4 h-4 mr-2" />
@@ -44,7 +42,6 @@ export default function ProfilePage() {
                 Sair
             </Button>
         </div>
-
       </div>
     </div>
   );
