@@ -1,13 +1,13 @@
 // src/app/compendio/page.jsx
-"use client"; // Precisamos de estado para os filtros
+"use client";
 
 import { useState } from "react";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Search, SlidersHorizontal } from "lucide-react";
+import CompendioFilters from "@/components/compendio/CompendioFilters"; // 1. Importar o novo componente
 
-// Tópicos em destaque que apareceriam abaixo da busca
 const featuredTopics = [
     { title: "Critérios (qSOFA)", description: "Ferramenta de triagem rápida para disfunção orgânica." },
     { title: "Manejo (1-Hora)", description: "Passos cruciais na primeira hora de manejo da sepse." },
@@ -18,7 +18,6 @@ export default function CompendioPage() {
   const [showFilters, setShowFilters] = useState(false);
 
   return (
-    // Usamos pb-24 para garantir espaço acima da BottomNav
     <div className="w-full max-w-4xl mx-auto py-8 pb-24">
       <header className="text-center mb-8">
         <h1 className="text-4xl font-bold">Compêndio de Sepse</h1>
@@ -26,8 +25,7 @@ export default function CompendioPage() {
           Pesquise tópicos, critérios e diretrizes de manejo.
         </p>
       </header>
-
-      {/* Seção de Busca e Filtros */}
+      
       <div className="relative w-full max-w-2xl mx-auto">
         <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-foreground/50" />
         <Input
@@ -37,7 +35,7 @@ export default function CompendioPage() {
         />
         <Button 
             onClick={() => setShowFilters(!showFilters)} 
-            variant="ghost" 
+            variant={showFilters ? "secondary" : "ghost"} // 2. Mudar o estilo do botão quando os filtros estão ativos
             size="icon" 
             className="absolute right-2 top-1/2 -translate-y-1/2 rounded-full"
         >
@@ -45,14 +43,9 @@ export default function CompendioPage() {
         </Button>
       </div>
 
-      {/* TODO: Lógica de filtros será implementada aqui no futuro */}
-      {showFilters && (
-        <div className="w-full max-w-2xl mx-auto mt-4 p-4 bg-card border rounded-lg">
-            <p className="text-center text-sm text-muted-foreground">Área de filtros (em desenvolvimento).</p>
-        </div>
-      )}
+      {/* 3. Renderizar o componente de filtros condicionalmente */}
+      {showFilters && <CompendioFilters />}
 
-      {/* Seção de Tópicos em Destaque */}
       <div className="mt-12">
         <h2 className="text-xl font-semibold mb-4 text-center">Tópicos em Destaque</h2>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
