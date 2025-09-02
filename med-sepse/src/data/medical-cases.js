@@ -35,3 +35,12 @@ export const medicalCases = [
   },
   // Podemos adicionar mais casos aqui no futuro
 ];
+export const rankingData = [
+  { rank: 1, name: 'Dra. Aline Souza', level: 'R3', points: 4580, isUser: false },
+  { rank: 2, name: 'Dr. Bruno Costa', level: 'R2', points: 4210, isUser: false },
+  { rank: 3, name: 'Seu Desempenho', level: 'R2', points: 3950, isUser: true },
+  { rank: 4, name: 'Dr. Carlos Lima', level: 'R3', points: 3800, isUser: false },
+  { rank: 5, name: 'Dra. Diana Faria', level: 'R1', points: 3550, isUser: false },
+  { rank: 6, name: 'Dr. Eduardo Martins', level: 'R1', points: 3200, isUser: false },
+  { rank: 7, name: 'Dra. Fernanda Alves', level: 'R2', points: 2900, isUser: false },
+];
