@@ -1,27 +1,71 @@
 // src/app/compendio/page.jsx
-import CompendioContent from "@/components/compendio/CompendioContent";
-import CompendioNav from "@/components/compendio/CompendioNav";
+"use client"; // Precisamos de estado para os filtros
+
+import { useState } from "react";
+import { Input } from "@/components/ui/input";
+import { Button } from "@/components/ui/button";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Search, SlidersHorizontal } from "lucide-react";
+
+// Tópicos em destaque que apareceriam abaixo da busca
+const featuredTopics = [
+    { title: "Critérios (qSOFA)", description: "Ferramenta de triagem rápida para disfunção orgânica." },
+    { title: "Manejo (1-Hora)", description: "Passos cruciais na primeira hora de manejo da sepse." },
+    { title: "Foco Pulmonar", description: "Investigação e características da sepse de origem pulmonar." },
+];
 
 export default function CompendioPage() {
+  const [showFilters, setShowFilters] = useState(false);
+
   return (
-    <div className="w-full max-w-6xl mx-auto py-8">
-      <header className="mb-8">
-        <h1 className="text-3xl font-bold">Compêndio de Sepse</h1>
-        <p className="text-foreground/80">
-          Um guia de referência rápida para diagnóstico e manejo.
+    // Usamos pb-24 para garantir espaço acima da BottomNav
+    <div className="w-full max-w-4xl mx-auto py-8 pb-24">
+      <header className="text-center mb-8">
+        <h1 className="text-4xl font-bold">Compêndio de Sepse</h1>
+        <p className="text-foreground/80 mt-2">
+          Pesquise tópicos, critérios e diretrizes de manejo.
         </p>
       </header>
-      
-      {/* Layout de duas colunas para desktop, uma coluna para mobile */}
-      <div className="grid grid-cols-1 md:grid-cols-[220px_1fr] gap-8">
-        {/* Coluna da Esquerda: Navegação */}
-        <div className="w-full">
-          <CompendioNav />
-        </div>
 
-        {/* Coluna da Direita: Conteúdo */}
-        <div className="w-full">
-          <CompendioContent />
+      {/* Seção de Busca e Filtros */}
+      <div className="relative w-full max-w-2xl mx-auto">
+        <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-foreground/50" />
+        <Input
+          type="search"
+          placeholder="Pesquisar por 'choque séptico'..."
+          className="w-full pl-10 h-12 text-lg rounded-full"
+        />
+        <Button 
+            onClick={() => setShowFilters(!showFilters)} 
+            variant="ghost" 
+            size="icon" 
+            className="absolute right-2 top-1/2 -translate-y-1/2 rounded-full"
+        >
+          <SlidersHorizontal className="w-5 h-5" />
+        </Button>
+      </div>
+
+      {/* TODO: Lógica de filtros será implementada aqui no futuro */}
+      {showFilters && (
+        <div className="w-full max-w-2xl mx-auto mt-4 p-4 bg-card border rounded-lg">
+            <p className="text-center text-sm text-muted-foreground">Área de filtros (em desenvolvimento).</p>
+        </div>
+      )}
+
+      {/* Seção de Tópicos em Destaque */}
+      <div className="mt-12">
+        <h2 className="text-xl font-semibold mb-4 text-center">Tópicos em Destaque</h2>
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+            {featuredTopics.map(topic => (
+                <Card key={topic.title} className="hover:border-primary transition-colors">
+                    <CardHeader>
+                        <CardTitle className="text-base">{topic.title}</CardTitle>
+                    </CardHeader>
+                    <CardContent>
+                        <p className="text-sm text-foreground/80">{topic.description}</p>
+                    </CardContent>
+                </Card>
+            ))}
         </div>
       </div>
     </div>
