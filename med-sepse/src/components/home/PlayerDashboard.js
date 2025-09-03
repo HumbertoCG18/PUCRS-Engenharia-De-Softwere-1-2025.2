@@ -1,4 +1,3 @@
-// src/components/home/PlayerDashboard.js
 import { Flame, CheckCircle2, Circle, Stethoscope } from 'lucide-react';
 import { getDailyCase } from '@/lib/cases';
 
@@ -12,8 +11,19 @@ export default function PlayerDashboard() {
   };
 
   const dailyCase = getDailyCase();
+  
+  // Salvaguarda: Se não houver caso do dia, renderiza um estado de "vazio"
+  if (!dailyCase) {
+    return (
+      <div className="w-full bg-card rounded-lg border p-6 text-center">
+        <p className="text-muted-foreground">Nenhum caso do dia disponível no momento.</p>
+      </div>
+    );
+  }
+
   const xpPercentage = (userStats.xp / userStats.xpToNextLevel) * 100;
 
+  // Lógica de progresso da semana (ainda mockada)
   const weekData = [
     { day: 'S', done: true }, { day: 'T', done: true }, { day: 'Q', done: false },
     { day: 'Q', done: false }, { day: 'S', done: false }, { day: 'S', done: false },
@@ -49,8 +59,8 @@ export default function PlayerDashboard() {
         </div>
       </div>
 
-      {/* Seção Principal: Paciente do Dia (Call to Action) */}
-      <a href="#" className="block p-4 hover:bg-black/5 dark:hover:bg-white/5 transition-colors">
+      {/* Seção Principal: Paciente do Dia (Link corrigido para /game/diario) */}
+      <a href="/game/diario" className="block p-4 hover:bg-black/5 dark:hover:bg-white/5 transition-colors">
         <div className="flex items-start justify-between">
           <div>
             <h3 className="text-lg font-bold">Paciente do Dia</h3>
@@ -59,7 +69,7 @@ export default function PlayerDashboard() {
           <Stethoscope className="w-8 h-8 text-foreground/30" />
         </div>
         <p className="text-sm text-foreground/80 mt-2 text-justify">
-          {dailyCase.history}
+          {dailyCase.presentation}
         </p>
       </a>
 

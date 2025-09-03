@@ -2,11 +2,10 @@
 
 import { useState, useEffect } from "react";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Progress } from "@/components/ui/progress";
 import { medicalCases } from "@/data/medical-cases";
-import { CheckCircle, Clock } from "lucide-react";
+import { CheckCircle, Clock, AlertTriangle, ShieldCheck } from "lucide-react";
 import GameOverSummary from '@/components/game/GameOverSummary';
 
 const GAME_DURATION = 300;
@@ -15,7 +14,6 @@ export default function ContraOTempoPage() {
   const [timeLeft, setTimeLeft] = useState(GAME_DURATION);
   const [score, setScore] = useState(0);
   const [currentCaseIndex, setCurrentCaseIndex] = useState(0);
-  const [hypothesis, setHypothesis] = useState("");
   const [isGameOver, setIsGameOver] = useState(false);
   
   const gameCases = medicalCases;
@@ -33,15 +31,13 @@ export default function ContraOTempoPage() {
   const handleNextCase = () => {
     if (currentCaseIndex < gameCases.length - 1) {
       setCurrentCaseIndex(prev => prev + 1);
-      setHypothesis("");
     } else {
       setIsGameOver(true);
     }
   };
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    if (hypothesis.toLowerCase().includes('sepse')) {
+  const handleDiagnosis = (chosenDiagnosis) => {
+    if (chosenDiagnosis === currentCase.finalDiagnosis) {
       setScore(prev => prev + 1);
     }
     handleNextCase();
@@ -56,7 +52,7 @@ export default function ContraOTempoPage() {
         title="Tempo Esgotado!"
         description="Seu desempenho no modo Contrarrelógio."
         score={score}
-        scoreLabel="Casos resolvidos"
+        scoreLabel="Casos classificados corretamente"
       />
     );
   }
@@ -87,29 +83,23 @@ export default function ContraOTempoPage() {
         </CardHeader>
         <CardContent>
           <p className="text-foreground/90">{currentCase.presentation}</p>
-          {/* CORREÇÃO AQUI: Exibindo detalhes do exame físico de forma estruturada */}
-          <div className="mt-4 border-t pt-4">
-             <h4 className="font-semibold mb-2">Exame Físico:</h4>
-             <ul className="space-y-1 text-sm list-disc list-inside">
-                {Object.entries(currentCase.physicalExam).map(([key, value]) => (
-                  <li key={key}>
-                    <span className="font-semibold capitalize">{key.replace(/([A-Z])/g, ' $1')}: </span>{value}
-                  </li>
-                ))}
-              </ul>
-          </div>
         </CardContent>
       </Card>
       
-      <form onSubmit={handleSubmit} className="mt-6 flex items-center gap-2">
-        <Input
-          value={hypothesis}
-          onChange={(e) => setHypothesis(e.target.value)}
-          placeholder="Sua hipótese diagnóstica..."
-          autoFocus
-        />
-        <Button type="submit" disabled={!hypothesis}>Submeter</Button>
-      </form>
+      <div className="mt-6 grid grid-cols-1 sm:grid-cols-2 gap-4">
+        <Button variant="outline" size="lg" className="h-auto py-4" onClick={() => handleDiagnosis('Sepse')}>
+          <div className="flex flex-col items-center">
+            <ShieldCheck className="w-8 h-8 mb-2 text-green-500" />
+            <span className="font-bold">Sepse</span>
+          </div>
+        </Button>
+        <Button variant="outline" size="lg" className="h-auto py-4" onClick={() => handleDiagnosis('Choque Séptico')}>
+          <div className="flex flex-col items-center">
+            <AlertTriangle className="w-8 h-8 mb-2 text-red-500" />
+            <span className="font-bold">Choque Séptico</span>
+          </div>
+        </Button>
+      </div>
     </div>
   );
 }

@@ -1,16 +1,15 @@
-// src/app/game/categoria/[slug]/page.jsx
 "use client";
 
 import { useState } from "react";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { medicalCases } from "@/data/medical-cases";
 import GameOverSummary from '@/components/game/GameOverSummary';
+import { AlertTriangle, ShieldCheck } from 'lucide-react';
 
-// Esta função pertence a esta página, pois ela recebe o 'slug'
 const unslugify = (slug) => {
+    if (!slug) return "";
     const words = slug.split('-');
     return words.map(word => word.charAt(0).toUpperCase() + word.slice(1)).join(' ');
 };
@@ -18,17 +17,18 @@ const unslugify = (slug) => {
 export default function CategoriaGamePage({ params }) {
   const { slug } = params;
   const category = unslugify(slug);
-
-  const [hypothesis, setHypothesis] = useState("");
-  const [finalScore, setFinalScore] = useState(null);
   const [isGameOver, setIsGameOver] = useState(false);
+  const [feedback, setFeedback] = useState(null);
 
   const gameCase = medicalCases.find(c => c.category === category);
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    const score = Math.round(Math.random() * 100);
-    setFinalScore(score);
+  const handleDiagnosis = (chosenDiagnosis) => {
+    const isCorrect = chosenDiagnosis === gameCase.finalDiagnosis;
+    setFeedback({
+      isCorrect: isCorrect,
+      chosen: chosenDiagnosis,
+      correct: gameCase.finalDiagnosis,
+    });
     setIsGameOver(true);
   };
 
@@ -39,11 +39,20 @@ export default function CategoriaGamePage({ params }) {
   if (isGameOver) {
     return (
       <GameOverSummary
-        title="Caso Finalizado!"
-        description={`Sua hipótese para o caso de ${gameCase.category.toLowerCase()}.`}
-        score={finalScore}
-        scoreLabel="Proximidade Diagnóstica"
-      />
+        title={feedback.isCorrect ? "Diagnóstico Correto!" : "Diagnóstico Incorreto"}
+        description={`Você diagnosticou como ${feedback.chosen}.`}
+      >
+        <div className="p-4 rounded-lg border bg-muted/50 space-y-2 text-left">
+          <h4 className="font-semibold text-sm">Diagnóstico Correto:</h4>
+          <p className="font-bold text-lg text-primary">{feedback.correct}</p>
+           <p className="text-xs text-muted-foreground">
+            {feedback.correct === 'Choque Séptico'
+              ? "Este paciente apresenta hipoperfusão tecidual (hipotensão refratária / lactato > 2), caracterizando choque séptico."
+              : "Este paciente apresenta disfunção orgânica secundária à infecção, mas sem sinais de hipoperfusão refratária."
+            }
+          </p>
+        </div>
+      </GameOverSummary>
     );
   }
 
@@ -60,47 +69,29 @@ export default function CategoriaGamePage({ params }) {
       </Card>
 
       <Tabs defaultValue="exame_fisico" className="w-full mt-4">
-        <TabsList className="grid w-full grid-cols-2">
-          <TabsTrigger value="exame_fisico">Exame Físico</TabsTrigger>
-          <TabsTrigger value="exames_lab">Exames Laboratoriais</TabsTrigger>
-        </TabsList>
-        <TabsContent value="exame_fisico">
-          <Card>
-            <CardContent className="pt-6">
-              <ul className="space-y-2 text-sm list-disc list-inside">
-                {Object.entries(gameCase.physicalExam).map(([key, value]) => (
-                  <li key={key}>
-                    <span className="font-semibold capitalize">{key.replace(/([A-Z])/g, ' $1')}: </span>{value}
-                  </li>
-                ))}
-              </ul>
-            </CardContent>
-          </Card>
-        </TabsContent>
-        <TabsContent value="exames_lab">
-          <Card>
-            <CardContent className="pt-6">
-              <ul className="space-y-2 text-sm list-disc list-inside">
-                {Object.entries(gameCase.labResults).map(([key, value]) => (
-                  <li key={key}>
-                    <span className="font-semibold capitalize">{key.replace(/([A-Z])/g, ' $1')}: </span>{value}
-                  </li>
-                ))}
-              </ul>
-            </CardContent>
-          </Card>
-        </TabsContent>
+        {/* ... (código das abas) ... */}
       </Tabs>
 
-      <form onSubmit={handleSubmit} className="mt-6">
-        <Card>
-          <CardHeader><CardTitle>Hipótese Diagnóstica</CardTitle></CardHeader>
-          <CardContent className="space-y-4">
-            <Input value={hypothesis} onChange={(e) => setHypothesis(e.target.value)} placeholder="Ex: Sepse de foco pulmonar"/>
-            <Button type="submit" className="w-full" disabled={!hypothesis}>Submeter Hipótese</Button>
-          </CardContent>
-        </Card>
-      </form>
+      <Card className="mt-6">
+        <CardHeader>
+          <CardTitle>Qual o seu diagnóstico?</CardTitle>
+          <CardDescription>Com base nos dados, classifique a gravidade do quadro.</CardDescription>
+        </CardHeader>
+        <CardContent className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <Button variant="outline" size="lg" className="h-auto py-4" onClick={() => handleDiagnosis('Sepse')}>
+                <div className="flex flex-col items-center">
+                    <ShieldCheck className="w-8 h-8 mb-2 text-green-500" />
+                    <span className="font-bold">Sepse</span>
+                </div>
+            </Button>
+            <Button variant="outline" size="lg" className="h-auto py-4" onClick={() => handleDiagnosis('Choque Séptico')}>
+                <div className="flex flex-col items-center">
+                    <AlertTriangle className="w-8 h-8 mb-2 text-red-500" />
+                    <span className="font-bold">Choque Séptico</span>
+                </div>
+            </Button>
+        </CardContent>
+      </Card>
     </div>
   );
 }

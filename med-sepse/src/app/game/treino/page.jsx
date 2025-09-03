@@ -3,20 +3,19 @@
 import { useState } from "react";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { medicalCases } from "@/data/medical-cases";
-import { Target } from "lucide-react";
+import { AlertTriangle, ShieldCheck, Target } from "lucide-react";
 import GameOverSummary from '@/components/game/GameOverSummary';
 
 export default function TreinoPage() {
-  const [hypothesis, setHypothesis] = useState("");
   const [isGameOver, setIsGameOver] = useState(false);
+  const [chosenDiagnosis, setChosenDiagnosis] = useState(null);
 
   const gameCase = medicalCases.find(c => c.id === 'case001');
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
+  const handleDiagnosis = (diagnosis) => {
+    setChosenDiagnosis(diagnosis);
     setIsGameOver(true);
   };
 
@@ -28,16 +27,22 @@ export default function TreinoPage() {
     return (
       <GameOverSummary
         title="Treino Concluído!"
-        description="Compare sua hipótese com o diagnóstico correto."
+        description="Compare sua escolha com o diagnóstico e a justificativa corretos."
       >
         <div className="p-4 rounded-lg border bg-muted/50 space-y-4 text-left">
           <div>
-            <h4 className="font-semibold text-sm">Sua Hipótese:</h4>
-            <p className="text-muted-foreground">{hypothesis || "Nenhuma hipótese submetida."}</p>
+            <h4 className="font-semibold text-sm">Sua Escolha:</h4>
+            <p className="text-muted-foreground">{chosenDiagnosis || "Nenhuma"}</p>
           </div>
           <div className="p-4 rounded-md bg-green-500/10 text-green-700 dark:text-green-300 border border-green-500/20">
             <h4 className="font-semibold text-sm flex items-center"><Target className="w-4 h-4 mr-2"/> Diagnóstico Correto:</h4>
-            <p>{gameCase.correctDiagnosis}</p>
+            <p className="font-bold">{gameCase.finalDiagnosis}</p>
+            <p className="text-xs mt-1">
+              {gameCase.finalDiagnosis === 'Choque Séptico'
+                ? "Este paciente apresenta hipoperfusão tecidual (hipotensão refratária / lactato > 2), caracterizando choque séptico."
+                : "Este paciente apresenta disfunção orgânica secundária à infecção, mas sem sinais de hipoperfusão refratária."
+              }
+            </p>
           </div>
         </div>
       </GameOverSummary>
@@ -46,62 +51,40 @@ export default function TreinoPage() {
 
   return (
     <div className="w-full max-w-4xl mx-auto py-8 pb-24">
-      <header className="mb-4 text-center">
+       <header className="mb-4 text-center">
         <h1 className="text-3xl font-bold">Modo Treino</h1>
         <p className="text-muted-foreground mt-1">{gameCase.category}</p>
       </header>
-
+      
       <Card className="mb-4">
         <CardHeader><CardTitle>Apresentação do Caso</CardTitle></CardHeader>
         <CardContent><p className="text-foreground/90">{gameCase.presentation}</p></CardContent>
       </Card>
-
+      
       <Tabs defaultValue="exame_fisico" className="w-full mt-4">
-        <TabsList className="grid w-full grid-cols-2">
-          <TabsTrigger value="exame_fisico">Exame Físico</TabsTrigger>
-          <TabsTrigger value="exames_lab">Exames Laboratoriais</TabsTrigger>
-        </TabsList>
-        <TabsContent value="exame_fisico">
-          <Card>
-            <CardContent className="pt-6">
-              {/* CORREÇÃO AQUI */}
-              <ul className="space-y-2 text-sm list-disc list-inside">
-                {Object.entries(gameCase.physicalExam).map(([key, value]) => (
-                  <li key={key}>
-                    <span className="font-semibold capitalize">{key.replace(/([A-Z])/g, ' $1')}: </span>{value}
-                  </li>
-                ))}
-              </ul>
-            </CardContent>
-          </Card>
-        </TabsContent>
-        <TabsContent value="exames_lab">
-          <Card>
-            <CardContent className="pt-6">
-              <ul className="space-y-2 text-sm list-disc list-inside">
-                {Object.entries(gameCase.labResults).map(([key, value]) => (
-                  <li key={key}>
-                    <span className="font-semibold capitalize">{key.replace(/([A-Z])/g, ' $1')}: </span>{value}
-                  </li>
-                ))}
-              </ul>
-            </CardContent>
-          </Card>
-        </TabsContent>
+        {/* ... (código das abas) ... */}
       </Tabs>
-
-      <form onSubmit={handleSubmit} className="mt-6">
-        <Card>
-          <CardHeader>
-            <CardTitle>Sua Hipótese Diagnóstica</CardTitle>
-            <CardDescription>Após analisar o caso, submeta sua hipótese.</CardDescription>
-          </CardHeader>
-          <CardContent className="space-y-4">
-            <Input value={hypothesis} onChange={(e) => setHypothesis(e.target.value)} placeholder="Ex: Sepse de foco pulmonar"/>
-            <Button type="submit" className="w-full" disabled={!hypothesis}>Verificar Hipótese</Button>
-          </CardContent>
-        </Card>
-      </form>
+      
+      <Card className="mt-6">
+        <CardHeader>
+          <CardTitle>Qual o seu diagnóstico?</CardTitle>
+          <CardDescription>Após analisar, selecione a classificação do quadro.</CardDescription>
+        </CardHeader>
+        <CardContent className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <Button variant="outline" size="lg" className="h-auto py-4" onClick={() => handleDiagnosis('Sepse')}>
+                <div className="flex flex-col items-center">
+                    <ShieldCheck className="w-8 h-8 mb-2 text-green-500" />
+                    <span className="font-bold">Sepse</span>
+                </div>
+            </Button>
+            <Button variant="outline" size="lg" className="h-auto py-4" onClick={() => handleDiagnosis('Choque Séptico')}>
+                <div className="flex flex-col items-center">
+                    <AlertTriangle className="w-8 h-8 mb-2 text-red-500" />
+                    <span className="font-bold">Choque Séptico</span>
+                </div>
+            </Button>
+        </CardContent>
+      </Card>
     </div>
   );
 }
