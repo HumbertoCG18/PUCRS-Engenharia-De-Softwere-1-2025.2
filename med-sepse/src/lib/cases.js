@@ -1,11 +1,16 @@
-import { medicalCases } from '@/data/medical-cases';
+// src/lib/cases.js
+import medicalCases from '@/data/cases.json';
 
-// Simula a busca de dados que no futuro viria de uma API
 export function getCases() {
   return medicalCases;
 }
 
 export function getDailyCase() {
-  // Por enquanto, apenas retorna o primeiro caso marcado como diário
-  return medicalCases.find(c => c.isDailyCase);
+  // A lógica para o caso do dia agora pode ser baseada no ID ou na data
+  const startDate = new Date('2024-01-01');
+  const today = new Date();
+  const diffTime = Math.abs(today - startDate);
+  const diffDays = Math.floor(diffTime / (1000 * 60 * 60 * 24));
+  const caseIndex = diffDays % medicalCases.length;
+  return medicalCases[caseIndex];
 }

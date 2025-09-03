@@ -4,7 +4,7 @@ import { useState } from "react";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Button } from "@/components/ui/button";
-import { medicalCases } from "@/data/medical-cases";
+import { medicalCases } from "@/data/dados";
 import { AlertTriangle, ShieldCheck, Target } from "lucide-react";
 import GameOverSummary from '@/components/game/GameOverSummary';
 

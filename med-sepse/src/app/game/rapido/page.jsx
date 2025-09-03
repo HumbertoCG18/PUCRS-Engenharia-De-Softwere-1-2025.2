@@ -2,10 +2,9 @@
 
 import { useState, useEffect } from "react";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { Tabs } from "@/components/ui/tabs";
 import { Button } from "@/components/ui/button";
-import { Progress } from "@/components/ui/progress";
-import { medicalCases } from "@/data/medical-cases";
+import  medicalCases  from "@/data/dados";
 import GameOverSummary from '@/components/game/GameOverSummary';
 import { AlertTriangle, ShieldCheck } from 'lucide-react';
 

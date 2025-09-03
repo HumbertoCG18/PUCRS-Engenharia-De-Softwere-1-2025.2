@@ -1,7 +1,7 @@
 // src/app/game/categoria/page.jsx
 import Link from 'next/link';
 import { Card, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
-import { medicalCases } from "@/data/medical-cases";
+import { medicalCases } from "@/data/dados";
 import { Stethoscope } from 'lucide-react';
 
 // Função para criar um "slug" amigável para a URL a partir do nome da categoria

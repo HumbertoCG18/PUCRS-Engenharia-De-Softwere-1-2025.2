@@ -15,7 +15,7 @@ import {
   TableRow,
 } from "@/components/ui/table";
 // A importação deve ser exatamente assim:
-import { rankingData } from "@/data/medical-cases"; 
+import rankingData from "@/data/ranking.json"; // Mudar a importação
 import { Trophy } from "lucide-react";
 
 export default function RankingPage() {
