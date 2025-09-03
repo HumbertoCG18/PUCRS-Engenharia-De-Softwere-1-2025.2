@@ -1,4 +1,3 @@
-// src/app/game/diario/page.jsx
 "use client";
 
 import { useState, useEffect } from "react";
@@ -10,14 +9,11 @@ import { medicalCases } from "@/data/medical-cases";
 import GameOverSummary from '@/components/game/GameOverSummary';
 import { Calendar } from "lucide-react";
 
-// Função para selecionar o caso do dia de forma determinística
 const getCaseOfTheDay = () => {
-  const startDate = new Date('2024-01-01'); // Uma data fixa de início
+  const startDate = new Date('2024-01-01');
   const today = new Date();
   const diffTime = Math.abs(today - startDate);
   const diffDays = Math.floor(diffTime / (1000 * 60 * 60 * 24));
-  
-  // Usa o "dia do ano" (modificado) para pegar um caso do array de forma circular
   const caseIndex = diffDays % medicalCases.length;
   return medicalCases[caseIndex];
 };
@@ -28,7 +24,6 @@ export default function DiarioPage() {
   const [finalScore, setFinalScore] = useState(null);
   const [isGameOver, setIsGameOver] = useState(false);
   
-  // Lógica para verificar se o caso do dia já foi jogado (simulada com localStorage)
   const [hasPlayedToday, setHasPlayedToday] = useState(false);
   const todayString = new Date().toISOString().split('T')[0];
   
@@ -47,7 +42,6 @@ export default function DiarioPage() {
     const score = Math.round(Math.random() * 100);
     setFinalScore(score);
     setIsGameOver(true);
-    // Marca que o usuário jogou hoje
     localStorage.setItem('lastPlayedDaily', todayString);
   };
 
@@ -88,7 +82,7 @@ export default function DiarioPage() {
 
       <Card>
         <CardHeader><CardTitle>Apresentação do Caso</CardTitle></CardHeader>
-        <CardContent><p className="text-foreground/90">{gameCase.history}</p></CardContent>
+        <CardContent><p className="text-foreground/90">{gameCase.presentation}</p></CardContent>
       </Card>
 
       <Tabs defaultValue="exame_fisico" className="w-full mt-4">
@@ -97,15 +91,28 @@ export default function DiarioPage() {
           <TabsTrigger value="exames_lab">Exames Laboratoriais</TabsTrigger>
         </TabsList>
         <TabsContent value="exame_fisico">
-          <Card><CardContent className="pt-6"><p>{gameCase.physicalExam}</p></CardContent></Card>
+          <Card>
+            <CardContent className="pt-6">
+              {/* CORREÇÃO AQUI */}
+              <ul className="space-y-2 text-sm list-disc list-inside">
+                {Object.entries(gameCase.physicalExam).map(([key, value]) => (
+                  <li key={key}>
+                    <span className="font-semibold capitalize">{key.replace(/([A-Z])/g, ' $1')}: </span>{value}
+                  </li>
+                ))}
+              </ul>
+            </CardContent>
+          </Card>
         </TabsContent>
         <TabsContent value="exames_lab">
           <Card>
             <CardContent className="pt-6">
-              <ul className="space-y-1">
-                <li><strong>Leucócitos:</strong> {gameCase.labResults.leukocytes}</li>
-                <li><strong>Creatinina:</strong> {gameCase.labResults.creatinine}</li>
-                <li><strong>Lactato:</strong> {gameCase.labResults.lactate}</li>
+              <ul className="space-y-2 text-sm list-disc list-inside">
+                {Object.entries(gameCase.labResults).map(([key, value]) => (
+                  <li key={key}>
+                    <span className="font-semibold capitalize">{key.replace(/([A-Z])/g, ' $1')}: </span>{value}
+                  </li>
+                ))}
               </ul>
             </CardContent>
           </Card>

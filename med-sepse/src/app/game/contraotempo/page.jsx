@@ -86,8 +86,18 @@ export default function ContraOTempoPage() {
           <CardDescription>{currentCase.category} - Dificuldade: {currentCase.difficulty}</CardDescription>
         </CardHeader>
         <CardContent>
-          <p className="text-foreground/90">{currentCase.history}</p>
-          <p className="text-foreground/90 mt-2">{currentCase.physicalExam}</p>
+          <p className="text-foreground/90">{currentCase.presentation}</p>
+          {/* CORREÇÃO AQUI: Exibindo detalhes do exame físico de forma estruturada */}
+          <div className="mt-4 border-t pt-4">
+             <h4 className="font-semibold mb-2">Exame Físico:</h4>
+             <ul className="space-y-1 text-sm list-disc list-inside">
+                {Object.entries(currentCase.physicalExam).map(([key, value]) => (
+                  <li key={key}>
+                    <span className="font-semibold capitalize">{key.replace(/([A-Z])/g, ' $1')}: </span>{value}
+                  </li>
+                ))}
+              </ul>
+          </div>
         </CardContent>
       </Card>
       

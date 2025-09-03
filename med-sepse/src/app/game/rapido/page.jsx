@@ -21,15 +21,11 @@ export default function GamePage({ params }) {
     if (isGameOver || timeLeft <= 0) {
       if (timeLeft <= 0 && !isGameOver) {
         setIsGameOver(true);
-        setFinalScore(0); // Pontuação zero se o tempo acabar
+        setFinalScore(0);
       }
       return;
     }
-
-    const timer = setInterval(() => {
-      setTimeLeft((prevTime) => prevTime - 1);
-    }, 1000);
-
+    const timer = setInterval(() => setTimeLeft((prev) => prev - 1), 1000);
     return () => clearInterval(timer);
   }, [timeLeft, isGameOver]);
 
@@ -66,7 +62,7 @@ export default function GamePage({ params }) {
 
       <Card>
         <CardHeader><CardTitle>Apresentação do Caso</CardTitle></CardHeader>
-        <CardContent><p className="text-foreground/90">{gameCase.history}</p></CardContent>
+        <CardContent><p className="text-foreground/90">{gameCase.presentation}</p></CardContent>
       </Card>
 
       <Tabs defaultValue="exame_fisico" className="w-full mt-4">
@@ -75,15 +71,28 @@ export default function GamePage({ params }) {
           <TabsTrigger value="exames_lab">Exames Laboratoriais</TabsTrigger>
         </TabsList>
         <TabsContent value="exame_fisico">
-          <Card><CardContent className="pt-6"><p>{gameCase.physicalExam}</p></CardContent></Card>
+          <Card>
+            <CardContent className="pt-6">
+              {/* CORREÇÃO AQUI */}
+              <ul className="space-y-2 text-sm list-disc list-inside">
+                {Object.entries(gameCase.physicalExam).map(([key, value]) => (
+                  <li key={key}>
+                    <span className="font-semibold capitalize">{key.replace(/([A-Z])/g, ' $1')}: </span>{value}
+                  </li>
+                ))}
+              </ul>
+            </CardContent>
+          </Card>
         </TabsContent>
         <TabsContent value="exames_lab">
           <Card>
             <CardContent className="pt-6">
-              <ul className="space-y-1">
-                <li><strong>Leucócitos:</strong> {gameCase.labResults.leukocytes}</li>
-                <li><strong>Creatinina:</strong> {gameCase.labResults.creatinine}</li>
-                <li><strong>Lactato:</strong> {gameCase.labResults.lactate}</li>
+              <ul className="space-y-2 text-sm list-disc list-inside">
+                {Object.entries(gameCase.labResults).map(([key, value]) => (
+                  <li key={key}>
+                    <span className="font-semibold capitalize">{key.replace(/([A-Z])/g, ' $1')}: </span>{value}
+                  </li>
+                ))}
               </ul>
             </CardContent>
           </Card>
@@ -94,14 +103,8 @@ export default function GamePage({ params }) {
         <Card>
           <CardHeader><CardTitle>Hipótese Diagnóstica</CardTitle></CardHeader>
           <CardContent className="space-y-4">
-            <Input
-              value={hypothesis}
-              onChange={(e) => setHypothesis(e.target.value)}
-              placeholder="Ex: Sepse de foco pulmonar"
-            />
-            <Button type="submit" className="w-full" disabled={!hypothesis}>
-              Submeter Hipótese
-            </Button>
+            <Input value={hypothesis} onChange={(e) => setHypothesis(e.target.value)} placeholder="Ex: Sepse de foco pulmonar" />
+            <Button type="submit" className="w-full" disabled={!hypothesis}>Submeter Hipótese</Button>
           </CardContent>
         </Card>
       </form>
