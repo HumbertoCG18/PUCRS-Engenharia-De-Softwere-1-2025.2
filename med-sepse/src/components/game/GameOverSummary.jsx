@@ -2,13 +2,11 @@
 import Link from 'next/link';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { Award, Target } from "lucide-react";
+import { Award, Target } from "lucide-react"; // Adicione Target, se ainda não estiver lá
 
-// Este componente recebe props para ser reutilizável
 export default function GameOverSummary({ title, description, score, scoreLabel, children }) {
   
   const handleRetry = () => {
-    // Recarrega a página para reiniciar o jogo
     window.location.reload();
   };
 
@@ -21,7 +19,6 @@ export default function GameOverSummary({ title, description, score, scoreLabel,
           <CardDescription>{description}</CardDescription>
         </CardHeader>
         <CardContent className="space-y-6">
-          {/* Mostra a pontuação apenas se ela for fornecida */}
           {score !== undefined && (
             <div className="p-4 rounded-lg bg-muted">
               <p className="text-5xl font-bold text-primary">{score}</p>
@@ -29,10 +26,10 @@ export default function GameOverSummary({ title, description, score, scoreLabel,
             </div>
           )}
 
-          {/* 'children' é usado para conteúdo customizado, como o feedback do Modo Treino */}
           {children}
           
-          <div className="flex gap-2">
+          {/* ALTERAÇÃO AQUI: De 'flex gap-2' para 'flex flex-col gap-2' */}
+          <div className="flex flex-col gap-2"> 
             <Button onClick={handleRetry} variant="outline" className="w-full">Jogar Novamente</Button>
             <Button asChild className="w-full">
               <Link href="/game">Outros Modos</Link>

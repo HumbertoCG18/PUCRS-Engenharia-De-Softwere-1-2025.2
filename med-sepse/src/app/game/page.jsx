@@ -1,10 +1,16 @@
 // src/app/game/page.jsx
 import Link from 'next/link';
 import { Card, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
-import { Zap, Timer, Book, Dumbbell } from 'lucide-react';
+import { Zap, Timer, Book, Dumbbell, Calendar } from 'lucide-react'; // Adicionar o ícone de Calendário
 
-// O ERRO ESTAVA AQUI: O array estava incompleto. Esta é a versão correta.
 const gameModes = [
+  // Adicione este novo modo no topo da lista
+  {
+    title: 'Caso do Dia',
+    description: 'Um desafio único que muda a cada 24 horas.',
+    icon: Calendar,
+    href: '/game/diario',
+  },
   {
     title: 'Modo Rápido',
     description: 'Um único caso contra o tempo. Ideal para um desafio rápido.',
@@ -32,6 +38,7 @@ const gameModes = [
 ];
 
 export default function GameSelectionPage() {
+  // O resto do código da página continua o mesmo...
   return (
     <div className="w-full max-w-4xl mx-auto py-8 pb-24">
       <header className="text-center mb-8">
@@ -41,9 +48,15 @@ export default function GameSelectionPage() {
         </p>
       </header>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-        {gameModes.map((mode) => (
-          <Link key={mode.title} href={mode.href}>
+      {/* Ajustamos o grid para acomodar melhor 5 itens */}
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+        {gameModes.map((mode, index) => (
+          // Fazemos o primeiro item ocupar 3 colunas em telas grandes
+          <Link 
+            key={mode.title} 
+            href={mode.href}
+            className={index === 0 ? 'lg:col-span-3' : ''}
+          >
             <Card className="h-full hover:border-primary hover:bg-primary/5 transition-all flex flex-col">
               <CardHeader>
                 <mode.icon className="w-8 h-8 text-primary mb-2" />
