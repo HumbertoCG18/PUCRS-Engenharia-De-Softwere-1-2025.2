@@ -1,5 +1,5 @@
 // src/app/page.js
-import GameModes from '@/components/home/GameModes';
+// 1. Remover a importação de GameModes
 import { ThemeSwitcher } from '@/components/ui/ThemeSwitcher';
 import PlayerDashboard from '@/components/home/PlayerDashboard';
 
@@ -15,11 +15,7 @@ export default function Home() {
           <ThemeSwitcher />
         </header>
 
-        {/* 2. Substituir os dois componentes antigos pelo PlayerDashboard */}
         <PlayerDashboard />
-
-        <GameModes />
-
         <div className="h-32" />
       </div>
     </>

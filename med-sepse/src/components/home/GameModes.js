@@ -22,7 +22,7 @@ const gameModes = [
     description: 'Quantos casos você resolve em 5 minutos?',
     icon: Timer,
     color: 'text-red-500',
-    href: '/game/contrarotempo',
+    href: '/game/contraotempo',
   },
 ];
 

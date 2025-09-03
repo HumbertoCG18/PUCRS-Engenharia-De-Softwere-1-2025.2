@@ -1,37 +1,26 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
-import { Progress } from "@/components/ui/progress";
 import { medicalCases } from "@/data/medical-cases";
 import GameOverSummary from '@/components/game/GameOverSummary';
 
-export default function GamePage({ params }) {
-  const [timeLeft, setTimeLeft] = useState(300);
+const unslugify = (slug) => {
+    const words = slug.split('-');
+    return words.map(word => word.charAt(0).toUpperCase() + word.slice(1)).join(' ');
+};
+
+export default function CategoriaGamePage({ params }) {
+  const { slug } = params;
+  const category = unslugify(slug);
   const [hypothesis, setHypothesis] = useState("");
   const [finalScore, setFinalScore] = useState(null);
   const [isGameOver, setIsGameOver] = useState(false);
 
-  const gameCase = medicalCases.find(c => !c.isDailyCase);
-
-  useEffect(() => {
-    if (isGameOver || timeLeft <= 0) {
-      if (timeLeft <= 0 && !isGameOver) {
-        setIsGameOver(true);
-        setFinalScore(0); // Pontuação zero se o tempo acabar
-      }
-      return;
-    }
-
-    const timer = setInterval(() => {
-      setTimeLeft((prevTime) => prevTime - 1);
-    }, 1000);
-
-    return () => clearInterval(timer);
-  }, [timeLeft, isGameOver]);
+  const gameCase = medicalCases.find(c => c.category === category);
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -40,8 +29,9 @@ export default function GamePage({ params }) {
     setIsGameOver(true);
   };
 
-  const minutes = Math.floor(timeLeft / 60);
-  const seconds = timeLeft % 60;
+  if (!gameCase) {
+    return <div className="text-center py-10">Caso não encontrado para esta categoria.</div>
+  }
 
   if (isGameOver) {
     return (
@@ -56,12 +46,9 @@ export default function GamePage({ params }) {
 
   return (
     <div className="w-full max-w-4xl mx-auto py-8 pb-24">
-      <header className="mb-4">
-        <h1 className="text-2xl font-bold text-center capitalize">Modo Rápido</h1>
-        <div className="flex items-center gap-4 mt-2">
-          <Progress value={(timeLeft / 300) * 100} className="w-full" />
-          <span className="font-mono text-lg font-semibold">{String(minutes).padStart(2, '0')}:{String(seconds).padStart(2, '0')}</span>
-        </div>
+      <header className="mb-4 text-center">
+        <h1 className="text-2xl font-bold">Jogo por Categoria</h1>
+        <p className="text-muted-foreground">{category}</p>
       </header>
 
       <Card>
@@ -94,14 +81,8 @@ export default function GamePage({ params }) {
         <Card>
           <CardHeader><CardTitle>Hipótese Diagnóstica</CardTitle></CardHeader>
           <CardContent className="space-y-4">
-            <Input
-              value={hypothesis}
-              onChange={(e) => setHypothesis(e.target.value)}
-              placeholder="Ex: Sepse de foco pulmonar"
-            />
-            <Button type="submit" className="w-full" disabled={!hypothesis}>
-              Submeter Hipótese
-            </Button>
+            <Input value={hypothesis} onChange={(e) => setHypothesis(e.target.value)} placeholder="Ex: Sepse de foco pulmonar"/>
+            <Button type="submit" className="w-full" disabled={!hypothesis}>Submeter Hipótese</Button>
           </CardContent>
         </Card>
       </form>

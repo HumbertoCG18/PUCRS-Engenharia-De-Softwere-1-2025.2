@@ -1,70 +1,57 @@
 "use client";
 
-import { useState, useEffect } from "react";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { useState } from "react";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
-import { Progress } from "@/components/ui/progress";
 import { medicalCases } from "@/data/medical-cases";
+import { Target } from "lucide-react";
 import GameOverSummary from '@/components/game/GameOverSummary';
 
-export default function GamePage({ params }) {
-  const [timeLeft, setTimeLeft] = useState(300);
+export default function TreinoPage() {
   const [hypothesis, setHypothesis] = useState("");
-  const [finalScore, setFinalScore] = useState(null);
   const [isGameOver, setIsGameOver] = useState(false);
 
-  const gameCase = medicalCases.find(c => !c.isDailyCase);
-
-  useEffect(() => {
-    if (isGameOver || timeLeft <= 0) {
-      if (timeLeft <= 0 && !isGameOver) {
-        setIsGameOver(true);
-        setFinalScore(0); // Pontuação zero se o tempo acabar
-      }
-      return;
-    }
-
-    const timer = setInterval(() => {
-      setTimeLeft((prevTime) => prevTime - 1);
-    }, 1000);
-
-    return () => clearInterval(timer);
-  }, [timeLeft, isGameOver]);
+  const gameCase = medicalCases.find(c => c.id === 'case001');
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    const score = Math.round(Math.random() * 100);
-    setFinalScore(score);
     setIsGameOver(true);
   };
 
-  const minutes = Math.floor(timeLeft / 60);
-  const seconds = timeLeft % 60;
+  if (!gameCase) {
+    return <div className="text-center py-10">Caso de treino não encontrado.</div>
+  }
 
   if (isGameOver) {
     return (
       <GameOverSummary
-        title="Caso Finalizado!"
-        description={`Sua hipótese para o caso de ${gameCase.category.toLowerCase()}.`}
-        score={finalScore}
-        scoreLabel="Proximidade Diagnóstica"
-      />
+        title="Treino Concluído!"
+        description="Compare sua hipótese com o diagnóstico correto."
+      >
+        <div className="p-4 rounded-lg border bg-muted/50 space-y-4 text-left">
+          <div>
+            <h4 className="font-semibold text-sm">Sua Hipótese:</h4>
+            <p className="text-muted-foreground">{hypothesis || "Nenhuma hipótese submetida."}</p>
+          </div>
+          <div className="p-4 rounded-md bg-green-500/10 text-green-700 dark:text-green-300 border border-green-500/20">
+            <h4 className="font-semibold text-sm flex items-center"><Target className="w-4 h-4 mr-2"/> Diagnóstico Correto:</h4>
+            <p>{gameCase.correctDiagnosis}</p>
+          </div>
+        </div>
+      </GameOverSummary>
     );
   }
 
   return (
     <div className="w-full max-w-4xl mx-auto py-8 pb-24">
-      <header className="mb-4">
-        <h1 className="text-2xl font-bold text-center capitalize">Modo Rápido</h1>
-        <div className="flex items-center gap-4 mt-2">
-          <Progress value={(timeLeft / 300) * 100} className="w-full" />
-          <span className="font-mono text-lg font-semibold">{String(minutes).padStart(2, '0')}:{String(seconds).padStart(2, '0')}</span>
-        </div>
+      <header className="mb-4 text-center">
+        <h1 className="text-3xl font-bold">Modo Treino</h1>
+        <p className="text-muted-foreground mt-1">{gameCase.category}</p>
       </header>
 
-      <Card>
+      <Card className="mb-4">
         <CardHeader><CardTitle>Apresentação do Caso</CardTitle></CardHeader>
         <CardContent><p className="text-foreground/90">{gameCase.history}</p></CardContent>
       </Card>
@@ -92,15 +79,18 @@ export default function GamePage({ params }) {
 
       <form onSubmit={handleSubmit} className="mt-6">
         <Card>
-          <CardHeader><CardTitle>Hipótese Diagnóstica</CardTitle></CardHeader>
+          <CardHeader>
+            <CardTitle>Sua Hipótese Diagnóstica</CardTitle>
+            <CardDescription>Após analisar o caso, submeta sua hipótese.</CardDescription>
+          </CardHeader>
           <CardContent className="space-y-4">
-            <Input
-              value={hypothesis}
-              onChange={(e) => setHypothesis(e.target.value)}
+            <Input 
+              value={hypothesis} 
+              onChange={(e) => setHypothesis(e.target.value)} 
               placeholder="Ex: Sepse de foco pulmonar"
             />
             <Button type="submit" className="w-full" disabled={!hypothesis}>
-              Submeter Hipótese
+              Verificar Hipótese
             </Button>
           </CardContent>
         </Card>
