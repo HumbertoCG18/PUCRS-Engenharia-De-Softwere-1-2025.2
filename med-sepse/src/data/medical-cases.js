@@ -5,12 +5,8 @@ export const medicalCases = [
     id: 'case001',
     difficulty: 'R2',
     category: 'Foco Neurológico',
-    isDailyCase: true, // Este será nosso novo caso do dia
-    
-    // O "enunciado" inicial que o jogador vê
+    isDailyCase: true,
     presentation: 'Homem de 34 anos, sem comorbidades, é trazido ao PS por familiares com queixa de cefaleia intensa, vômitos e febre de 39°C há dois dias.',
-    
-    // Informações que podem ser "descobertas" nas abas do jogo
     physicalExam: {
       neurological: 'Glasgow 10 (Abertura ocular aos chamados, sons incompreensíveis, localiza dor). Rigidez nucal presente.',
       vitals: 'FC: 113bpm; PA: 80x62mmHg; FR: 18ipm; SpO2: 96% em ar ambiente.',
@@ -23,8 +19,6 @@ export const medicalCases = [
       platelets: '140.000/mm³',
       bilirubin: '1.5 mg/dL',
     },
-    
-    // O diagnóstico correto para o nosso algoritmo de proximidade
     correctDiagnosis: 'Choque séptico de foco neurológico (meningite bacteriana)',
     keywords: ['meningite', 'sepse', 'choque séptico', 'neurológico', 'hipertensão intracraniana', 'insuficiência renal'],
   },
@@ -33,9 +27,7 @@ export const medicalCases = [
     difficulty: 'R1',
     category: 'Foco Urinário',
     isDailyCase: false,
-    
     presentation: 'Homem de 54 anos, hipertenso, é trazido ao PS com quadro de febre e rebaixamento do nível de consciência. Familiares relatam dor em flanco direito e disúria há três dias.',
-    
     physicalExam: {
       neurological: 'Glasgow 13 (Confuso, mas obedece a comandos verbais).',
       vitals: 'FC: 120 bpm; PA: 80/40 mmHg; T: 38°C; Tempo de enchimento capilar: 5 segundos.',
@@ -43,16 +35,55 @@ export const medicalCases = [
     },
     labResults: {
       leukocytes: '19.000/mm³ (com desvio à esquerda)',
-      creatinine: '2.7 mg/dL', // Sinal claro de disfunção renal
-      lactate: '36 mg/dL (equivalente a 4.0 mmol/L)', // Sinal claro de hipoperfusão
+      creatinine: '2.7 mg/dL',
+      lactate: '36 mg/dL (equivalente a 4.0 mmol/L)',
       platelets: '110.000/mm³',
       urineTest: 'Leucocitúria, hematúria e nitrito positivo.',
     },
-    
     correctDiagnosis: 'Choque séptico de foco urinário (pielonefrite)',
     keywords: ['pielonefrite', 'sepse', 'choque séptico', 'urinário', 'insuficiência renal', 'disfunção circulatória'],
   },
-  // Adicionaremos mais casos ricos em detalhes aqui no futuro
+  // ===== NOVOS CASOS ABAIXO =====
+  {
+    id: 'case003',
+    difficulty: 'R2',
+    category: 'Foco Abdominal',
+    isDailyCase: false,
+    presentation: 'Homem de 45 anos com histórico de pancreatite procura o PS com dor abdominal intensa "em barra", febre de 38°C e taquicardia.',
+    physicalExam: {
+      vitals: 'FC: 110 bpm; PA: 110/60 mmHg; FR: 24 ipm; T: 38°C.',
+      abdominal: 'Abdome plano, ruídos hidroaéreos presentes, normotenso, sem dor significativa à palpação.',
+      general: 'Paciente ansioso, sudoreico, referindo dor intensa.',
+    },
+    labResults: {
+      leukocytes: '14.000/mm³',
+      amylase: '800 U/L (elevada)',
+      lactate: '2.5 mmol/L',
+      creatinine: '1.4 mg/dL',
+    },
+    correctDiagnosis: 'Sepse de foco abdominal (pancreatite aguda)',
+    keywords: ['pancreatite', 'sepse', 'abdominal', 'SIRS', 'dor em barra'],
+  },
+  {
+    id: 'case004',
+    difficulty: 'R3',
+    category: 'Foco Cutâneo',
+    isDailyCase: false,
+    presentation: 'Mulher de 57 anos, diabética não controlada, apresenta febre, dor, edema e eritema em coxa esquerda há alguns dias. A lesão mede 20cm em seu maior diâmetro e tem limites mal definidos.',
+    physicalExam: {
+      vitals: 'FC: 110 bpm; FR: 21 ipm; PA: 120/70 mmHg; T: 38.9°C.',
+      skin: 'Área eritematosa, edemaciada, quente e dolorosa na coxa esquerda, sem sinais de flutuação ou necrose.',
+      cardiovascular: 'Taquicardia sinusal, pulsos cheios.',
+    },
+    labResults: {
+      leukocytes: '16.000/mm³',
+      lactate: '2.8 mmol/L',
+      hba1c: '9.5% (indicativo de mau controle glicêmico)',
+      pcr: '180 mg/L (elevado)',
+    },
+    correctDiagnosis: 'Sepse de foco cutâneo (celulite)',
+    keywords: ['celulite', 'sepse', 'cutâneo', 'partes moles', 'diabetes', 'infecção de pele'],
+  },
 ];
 
 

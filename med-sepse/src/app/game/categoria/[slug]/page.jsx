@@ -1,3 +1,4 @@
+// src/app/game/categoria/[slug]/page.jsx
 "use client";
 
 import { useState } from "react";
@@ -8,6 +9,7 @@ import { Button } from "@/components/ui/button";
 import { medicalCases } from "@/data/medical-cases";
 import GameOverSummary from '@/components/game/GameOverSummary';
 
+// Esta função pertence a esta página, pois ela recebe o 'slug'
 const unslugify = (slug) => {
     const words = slug.split('-');
     return words.map(word => word.charAt(0).toUpperCase() + word.slice(1)).join(' ');
@@ -16,6 +18,7 @@ const unslugify = (slug) => {
 export default function CategoriaGamePage({ params }) {
   const { slug } = params;
   const category = unslugify(slug);
+
   const [hypothesis, setHypothesis] = useState("");
   const [finalScore, setFinalScore] = useState(null);
   const [isGameOver, setIsGameOver] = useState(false);
@@ -53,7 +56,7 @@ export default function CategoriaGamePage({ params }) {
 
       <Card>
         <CardHeader><CardTitle>Apresentação do Caso</CardTitle></CardHeader>
-        <CardContent><p className="text-foreground/90">{gameCase.history}</p></CardContent>
+        <CardContent><p className="text-foreground/90">{gameCase.presentation}</p></CardContent>
       </Card>
 
       <Tabs defaultValue="exame_fisico" className="w-full mt-4">
@@ -62,15 +65,27 @@ export default function CategoriaGamePage({ params }) {
           <TabsTrigger value="exames_lab">Exames Laboratoriais</TabsTrigger>
         </TabsList>
         <TabsContent value="exame_fisico">
-          <Card><CardContent className="pt-6"><p>{gameCase.physicalExam}</p></CardContent></Card>
+          <Card>
+            <CardContent className="pt-6">
+              <ul className="space-y-2 text-sm list-disc list-inside">
+                {Object.entries(gameCase.physicalExam).map(([key, value]) => (
+                  <li key={key}>
+                    <span className="font-semibold capitalize">{key.replace(/([A-Z])/g, ' $1')}: </span>{value}
+                  </li>
+                ))}
+              </ul>
+            </CardContent>
+          </Card>
         </TabsContent>
         <TabsContent value="exames_lab">
           <Card>
             <CardContent className="pt-6">
-              <ul className="space-y-1">
-                <li><strong>Leucócitos:</strong> {gameCase.labResults.leukocytes}</li>
-                <li><strong>Creatinina:</strong> {gameCase.labResults.creatinine}</li>
-                <li><strong>Lactato:</strong> {gameCase.labResults.lactate}</li>
+              <ul className="space-y-2 text-sm list-disc list-inside">
+                {Object.entries(gameCase.labResults).map(([key, value]) => (
+                  <li key={key}>
+                    <span className="font-semibold capitalize">{key.replace(/([A-Z])/g, ' $1')}: </span>{value}
+                  </li>
+                ))}
               </ul>
             </CardContent>
           </Card>
