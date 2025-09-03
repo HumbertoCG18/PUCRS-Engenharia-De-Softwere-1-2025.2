@@ -3,18 +3,35 @@ import Link from 'next/link';
 import { Card, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 import { Zap, Timer, Book, Dumbbell } from 'lucide-react';
 
+// O ERRO ESTAVA AQUI: O array estava incompleto. Esta é a versão correta.
 const gameModes = [
-  // ... (outros modos de jogo)
+  {
+    title: 'Modo Rápido',
+    description: 'Um único caso contra o tempo. Ideal para um desafio rápido.',
+    icon: Zap,
+    href: '/game/rapido',
+  },
+  {
+    title: 'Contrarrelógio',
+    description: 'Resolva o máximo de casos que puder em 5 minutos.',
+    icon: Timer,
+    href: '/game/contraotempo',
+  },
+  {
+    title: 'Jogo por Categoria',
+    description: 'Aprofunde seus conhecimentos em uma área específica.',
+    icon: Book,
+    href: '/game/categoria',
+  },
   {
     title: 'Modo Treino',
     description: 'Estude um caso sem pressão de tempo ou pontuação.',
     icon: Dumbbell,
-    href: '/game/treino', // ATUALIZE ESTE LINK
+    href: '/game/treino',
   },
 ];
 
 export default function GameSelectionPage() {
-  // ... (o resto do código da página continua o mesmo)
   return (
     <div className="w-full max-w-4xl mx-auto py-8 pb-24">
       <header className="text-center mb-8">
