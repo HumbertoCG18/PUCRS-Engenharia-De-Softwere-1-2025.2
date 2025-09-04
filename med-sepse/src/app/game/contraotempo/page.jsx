@@ -1,14 +1,24 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
 import { Progress } from "@/components/ui/progress";
-import { medicalCases } from "@/data/dados";
-import { CheckCircle, Clock, AlertTriangle, ShieldCheck } from "lucide-react";
+import medicalCases from "@/data/cases.json";
 import GameOverSummary from '@/components/game/GameOverSummary';
+import ClinicalCase from "@/components/game/ClinicalCase";
+import { CheckCircle, Clock } from "lucide-react";
 
-const GAME_DURATION = 300;
+const GAME_DURATION = 300; // 5 minutos
+
+// Função para embaralhar o array de casos, para dar variedade a cada partida
+const shuffleArray = (array) => {
+  let currentIndex = array.length, randomIndex;
+  while (currentIndex !== 0) {
+    randomIndex = Math.floor(Math.random() * currentIndex);
+    currentIndex--;
+    [array[currentIndex], array[randomIndex]] = [array[randomIndex], array[currentIndex]];
+  }
+  return array;
+};
 
 export default function ContraOTempoPage() {
   const [timeLeft, setTimeLeft] = useState(GAME_DURATION);
@@ -16,9 +26,15 @@ export default function ContraOTempoPage() {
   const [currentCaseIndex, setCurrentCaseIndex] = useState(0);
   const [isGameOver, setIsGameOver] = useState(false);
   
-  const gameCases = medicalCases;
+  // Embaralhamos os casos no início do jogo e guardamos no estado
+  const [gameCases, setGameCases] = useState([]);
+  useEffect(() => {
+    setGameCases(shuffleArray([...medicalCases]));
+  }, []);
+
   const currentCase = gameCases[currentCaseIndex];
 
+  // Efeito para o timer principal
   useEffect(() => {
     if (timeLeft <= 0) {
       setIsGameOver(true);
@@ -28,23 +44,33 @@ export default function ContraOTempoPage() {
     return () => clearInterval(timer);
   }, [timeLeft]);
 
-  const handleNextCase = () => {
+  // Função chamada pelo ClinicalCase quando um caso é finalizado
+  const handleCaseComplete = (answers) => {
+    // Verifica se a resposta do estágio 2 (Sepse vs Choque) está correta
+    if (answers[2]?.chosen === answers[2]?.correct) {
+      setScore(prev => prev + 1);
+    }
+
+    // Avança para o próximo caso
     if (currentCaseIndex < gameCases.length - 1) {
       setCurrentCaseIndex(prev => prev + 1);
     } else {
+      // Se acabarem os casos, o jogo termina
       setIsGameOver(true);
     }
   };
 
-  const handleDiagnosis = (chosenDiagnosis) => {
-    if (chosenDiagnosis === currentCase.finalDiagnosis) {
-      setScore(prev => prev + 1);
-    }
-    handleNextCase();
-  };
-
   const minutes = Math.floor(timeLeft / 60);
   const seconds = timeLeft % 60;
+
+  // Mostra um estado de carregamento enquanto os casos são embaralhados
+  if (!currentCase) {
+    return (
+        <div className="w-full max-w-2xl mx-auto py-8 pb-24 text-center">
+            <p className="text-muted-foreground">Preparando os casos clínicos...</p>
+        </div>
+    );
+  }
 
   if (isGameOver) {
     return (
@@ -58,7 +84,7 @@ export default function ContraOTempoPage() {
   }
 
   return (
-    <div className="w-full max-w-4xl mx-auto py-8 pb-24">
+    <div className="w-full max-w-2xl mx-auto py-8 pb-24">
       <header className="mb-4">
         <div className="flex justify-between items-center">
           <h1 className="text-2xl font-bold capitalize">Contrarrelógio</h1>
@@ -75,30 +101,11 @@ export default function ContraOTempoPage() {
         </div>
         <Progress value={(timeLeft / GAME_DURATION) * 100} className="w-full mt-2" />
       </header>
-
-      <Card>
-        <CardHeader>
-          <CardTitle>Caso #{currentCaseIndex + 1}</CardTitle>
-          <CardDescription>{currentCase.category} - Dificuldade: {currentCase.difficulty}</CardDescription>
-        </CardHeader>
-        <CardContent>
-          <p className="text-foreground/90">{currentCase.presentation}</p>
-        </CardContent>
-      </Card>
       
-      <div className="mt-6 grid grid-cols-1 sm:grid-cols-2 gap-4">
-        <Button variant="outline" size="lg" className="h-auto py-4" onClick={() => handleDiagnosis('Sepse')}>
-          <div className="flex flex-col items-center">
-            <ShieldCheck className="w-8 h-8 mb-2 text-green-500" />
-            <span className="font-bold">Sepse</span>
-          </div>
-        </Button>
-        <Button variant="outline" size="lg" className="h-auto py-4" onClick={() => handleDiagnosis('Choque Séptico')}>
-          <div className="flex flex-col items-center">
-            <AlertTriangle className="w-8 h-8 mb-2 text-red-500" />
-            <span className="font-bold">Choque Séptico</span>
-          </div>
-        </Button>
+      {/* Renderiza o componente do caso clínico atual */}
+      <div className="mt-6">
+        <p className="text-center text-sm text-muted-foreground mb-2">Caso {currentCaseIndex + 1} de {gameCases.length}</p>
+        <ClinicalCase gameCase={currentCase} onGameEnd={handleCaseComplete} />
       </div>
     </div>
   );

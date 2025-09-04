@@ -5,8 +5,33 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { CheckCircle, XCircle } from "lucide-react";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 
-// Este componente gerencia o fluxo de um único caso clínico
+// Componente auxiliar para renderizar listas de dados clínicos
+const ClinicalDataList = ({ dataObject }) => {
+  return (
+    <ul className="space-y-2 text-sm list-disc list-inside">
+      {Object.entries(dataObject).map(([key, value]) => (
+        <li key={key}>
+          <span className="font-semibold capitalize">{key.replace(/([A-Z])/g, ' $1')}: </span>{value}
+        </li>
+      ))}
+    </ul>
+  );
+};
+
+// Componente para formatar os sinais vitais
+const VitalsDisplay = ({ vitalsString }) => {
+    const vitalsArray = vitalsString.split(';').map(v => v.trim()).filter(v => v);
+    return (
+        <div className="font-mono text-sm p-3 bg-muted rounded-md space-y-1">
+            {vitalsArray.map((vital, index) => (
+                <p key={index}>{vital}{index < vitalsArray.length - 1 ? ';' : ''}</p>
+            ))}
+        </div>
+    )
+}
+
 export default function ClinicalCase({ gameCase, onGameEnd }) {
   const [currentStage, setCurrentStage] = useState(1);
   const [answers, setAnswers] = useState({});
@@ -21,11 +46,9 @@ export default function ClinicalCase({ gameCase, onGameEnd }) {
     const newAnswers = { ...answers, 2: { chosen: answer, correct: gameCase.stage2.correctOption }};
     setAnswers(newAnswers);
     
-    // Se a resposta for "Sepse" E o caso tiver um estágio 3, vá para ele.
     if (answer === 'Sepse' && gameCase.stage3) {
       setCurrentStage(3);
     } else {
-      // Caso contrário, finalize o jogo.
       onGameEnd(newAnswers);
     }
   };
@@ -45,7 +68,7 @@ export default function ClinicalCase({ gameCase, onGameEnd }) {
         </CardHeader>
         <CardContent className="space-y-4">
           <p className="text-foreground/90">{gameCase.stage1.presentation}</p>
-          <p className="font-mono text-sm p-3 bg-muted rounded-md">{gameCase.stage1.vitals}</p>
+          <VitalsDisplay vitalsString={gameCase.stage1.vitals} />
           <div className="border-t pt-4">
             <p className="font-semibold mb-2">{gameCase.stage1.question}</p>
             <div className="grid grid-cols-2 gap-2">
@@ -68,6 +91,20 @@ export default function ClinicalCase({ gameCase, onGameEnd }) {
           <CardHeader><CardTitle>Estágio 2: Evolução e Novos Dados</CardTitle></CardHeader>
           <CardContent className="space-y-4">
             <p className="text-foreground/90">{gameCase.stage2.presentation}</p>
+            
+            <Tabs defaultValue="exame_fisico" className="w-full">
+                <TabsList className="grid w-full grid-cols-2">
+                    <TabsTrigger value="exame_fisico">Exame Físico</TabsTrigger>
+                    <TabsTrigger value="exames_lab">Exames Laboratoriais</TabsTrigger>
+                </TabsList>
+                <TabsContent value="exame_fisico">
+                    <Card><CardContent className="pt-6"><ClinicalDataList dataObject={gameCase.physicalExam} /></CardContent></Card>
+                </TabsContent>
+                <TabsContent value="exames_lab">
+                    <Card><CardContent className="pt-6"><ClinicalDataList dataObject={gameCase.labResults} /></CardContent></Card>
+                </TabsContent>
+            </Tabs>
+
             <div className="border-t pt-4">
               <p className="font-semibold mb-2">{gameCase.stage2.question}</p>
               <div className="grid grid-cols-2 gap-2">
