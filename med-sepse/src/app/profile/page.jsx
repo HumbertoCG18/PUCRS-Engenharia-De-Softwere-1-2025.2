@@ -2,6 +2,8 @@
 import { Button } from "@/components/ui/button";
 import { User, Settings, ShieldCheck, LogOut } from "lucide-react";
 import { Plug } from 'lucide-react';
+import { FileArchive } from 'lucide-react';
+
 
 
 export default function ProfilePage() {
@@ -32,6 +34,10 @@ export default function ProfilePage() {
             <Button variant="ghost" className="w-full justify-start">
                 <Plug className="w-4 h-4 mr-2" />
                 Conexões
+          </Button>
+              <Button variant="ghost" className="w-full justify-start">
+                <FileArchive className="w-4 h-4 mr-2" />
+                Arquivos
             </Button>
             <Button variant="ghost" className="w-full justify-start">
                 <ShieldCheck className="w-4 h-4 mr-2" />
