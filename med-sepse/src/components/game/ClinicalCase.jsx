@@ -7,8 +7,8 @@ import { Input } from "@/components/ui/input";
 import { CheckCircle, XCircle } from "lucide-react";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 
-// Componente auxiliar para renderizar listas de dados clínicos
 const ClinicalDataList = ({ dataObject }) => {
+  if (!dataObject) return null;
   return (
     <ul className="space-y-2 text-sm list-disc list-inside">
       {Object.entries(dataObject).map(([key, value]) => (
@@ -20,8 +20,8 @@ const ClinicalDataList = ({ dataObject }) => {
   );
 };
 
-// Componente para formatar os sinais vitais
 const VitalsDisplay = ({ vitalsString }) => {
+    if (!vitalsString) return null;
     const vitalsArray = vitalsString.split(';').map(v => v.trim()).filter(v => v);
     return (
         <div className="font-mono text-sm p-3 bg-muted rounded-md space-y-1">
@@ -123,7 +123,8 @@ export default function ClinicalCase({ gameCase, onGameEnd }) {
       )}
 
       {/* Estágio 3: Hipótese do Foco */}
-      {currentStage >= 3 && gameCase.stage3 && (
+      {/* CORREÇÃO AQUI: Verificamos se 'gameCase.stage3' e 'gameCase.stage3.question' existem */}
+      {currentStage >= 3 && gameCase.stage3?.question && (
         <Card>
           <CardHeader><CardTitle>Estágio 3: Hipótese do Foco</CardTitle></CardHeader>
           <CardContent>

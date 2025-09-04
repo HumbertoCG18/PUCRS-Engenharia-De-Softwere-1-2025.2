@@ -208,7 +208,7 @@
     "finalDiagnosis": "Choque Séptico de Foco Urinário (Pielonefrite)"
   },
    {
-    "id": "case005",
+    "id": "case011",
     "source": "PDF Questão 16",
     "difficulty": "R2",
     "category": "Foco Abdominal",
@@ -226,5 +226,29 @@
       "correctOption": "Choque Séptico"
     },
     "finalDiagnosis": "Choque Séptico de Foco Abdominal"
+  },
+  {
+    "id": "case012",
+    "source": "Gerado",
+    "difficulty": "R2",
+    "category": "Foco Neurológico",
+    "stage1": {
+      "presentation": "Uma estudante universitária de 21 anos é trazida à emergência pelos colegas de dormitório. Eles relatam que ela se queixou de dor de cabeça e sensibilidade à luz (fotofobia) ontem, e hoje acordou febril, confusa e com vômitos.",
+      "vitals": "FC: 110 bpm, FR: 22 irpm, PA: 105/65 mmHg, T: 39.1°C, Glasgow: 14 (confusa).",
+      "question": "Com base na apresentação (febre, taquipneia, alteração de consciência), há alta suspeita de sepse?",
+      "options": ["Sim", "Não"],
+      "correctOption": "Sim"
+    },
+    "stage2": {
+      "presentation": "Exames laboratoriais mostram Leucócitos: 16.500/mm³, Plaquetas: 115.000/mm³, Lactato: 2.3 mmol/L. Você administra 30ml/kg de cristaloides e a pressão arterial se estabiliza em 115/75 mmHg. A paciente permanece sonolenta, mas sem necessidade de vasopressores.",
+      "question": "Qual a classificação correta do quadro atual?",
+      "options": ["Sepse", "Choque Séptico"],
+      "correctOption": "Sepse"
+    },
+    "stage3": {
+        "question": "Qual a sua principal hipótese para o foco da infecção?",
+        "correctDiagnosisKeywords": ["neurológico", "meningite", "snc", "sistema nervoso central"]
+    },
+    "finalDiagnosis": "Sepse de Foco Neurológico"
   }
 ]

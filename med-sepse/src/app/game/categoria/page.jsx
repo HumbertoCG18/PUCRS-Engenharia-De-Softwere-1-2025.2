@@ -1,3 +1,4 @@
+// src/app/game/categoria/page.jsx
 import Link from 'next/link';
 import { Card, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 import medicalCases from "@/data/cases.json";

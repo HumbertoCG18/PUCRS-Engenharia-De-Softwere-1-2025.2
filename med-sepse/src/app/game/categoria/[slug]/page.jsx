@@ -1,3 +1,4 @@
+// src/app/game/categoria/[slug]/page.jsx
 "use client";
 
 import { useState } from "react";
@@ -5,7 +6,7 @@ import medicalCases from "@/data/cases.json";
 import GameOverSummary from '@/components/game/GameOverSummary';
 import ClinicalCase from "@/components/game/ClinicalCase";
 
-// Função para converter o slug da URL de volta para o nome da categoria
+// Esta função pertence a esta página, pois ela recebe o 'slug' da URL
 const unslugify = (slug) => {
     if (!slug) return "";
     const words = slug.split('-');
@@ -19,7 +20,6 @@ export default function CategoriaGamePage({ params }) {
   const [isGameOver, setIsGameOver] = useState(false);
   const [finalAnswers, setFinalAnswers] = useState(null);
 
-  // Encontra o primeiro caso que corresponde à categoria selecionada
   const gameCase = medicalCases.find(c => c.category === category);
 
   const handleGameEnd = (answers) => {
