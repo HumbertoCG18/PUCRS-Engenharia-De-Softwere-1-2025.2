@@ -1,0 +1,27 @@
+[
+  {
+    "id": 1,
+    "name": "Foco Pulmonar",
+    "description": "Infecções que se iniciam nos pulmões, como pneumonia."
+  },
+  {
+    "id": 2,
+    "name": "Foco Urinário",
+    "description": "Infecções do trato urinário, como pielonefrite."
+  },
+  {
+    "id": 3,
+    "name": "Foco Neurológico",
+    "description": "Infecções do sistema nervoso central, como meningite."
+  },
+  {
+    "id": 4,
+    "name": "Foco Abdominal",
+    "description": "Infecções na cavidade abdominal, como peritonite ou pancreatite."
+  },
+  {
+    "id": 5,
+    "name": "Foco Cutâneo",
+    "description": "Infecções da pele e tecidos moles, como celulite."
+  }
+]

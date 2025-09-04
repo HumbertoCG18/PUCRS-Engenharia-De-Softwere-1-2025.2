@@ -4,6 +4,7 @@
     "source": "Exemplo do Usuário",
     "difficulty": "R2",
     "category": "Foco Pulmonar",
+    "categoryId": 1,
     "stage1": {
       "presentation": "João, 58 anos, chega ao pronto-socorro com sua filha. Ele está visivelmente cansado e a filha relata que, nos últimos dois dias, ele apresentou febre alta (39,5°C), tosse com expectoração amarelada e falta de ar. O paciente é diabético e tem DPOC.",
       "vitals": "FC: 115 bpm, FR: 28 irpm, PA: 100/60 mmHg, T: 38,8°C, SpO2: 90% em ar ambiente.",
@@ -24,6 +25,7 @@
     "source": "PDF Questão 1",
     "difficulty": "R3",
     "category": "Foco Neurológico",
+    "categoryId": 3,
     "stage1": {
       "presentation": "Homem de 34 anos, sem antecedentes mórbidos, é trazido ao PS por familiares relatando dois dias de cefaleia holocraniana com piora progressiva, associada a vômitos e febre de 39°C.",
       "vitals": "FC: 113bpm; PA: 80x62mmHg; FR: 18ipm; SpO2: 96% em ar ambiente. Rigidez nucal presente.",
@@ -44,6 +46,7 @@
     "source": "PDF Questão 5",
     "difficulty": "R2",
     "category": "Foco Pulmonar",
+    "categoryId": 1,
     "stage1": {
       "presentation": "Paciente de 76 anos é admitido com confusão mental, dispneia e rebaixamento do nível de consciência. Radiografia de tórax confirma pneumonia.",
       "vitals": "FR: 24ipm; FC: 110bpm; PA: 84/54 mmHg; Glasgow: 7.",
@@ -68,6 +71,7 @@
     "source": "PDF Questão 8",
     "difficulty": "R1",
     "category": "Foco Urinário",
+    "categoryId": 2,
     "stage1": {
       "presentation": "Homem, 54 anos de idade, hipertenso, é trazido ao PS com quadro de febre e rebaixamento de nível de consciência. Apresenta dor em flanco direito, disúria e polaciúria há três dias.",
       "vitals": "FC: 120 bpm; PA: 80/40 mmHg; T: 38°C; TEC: 5 segundos. Exames: Cr: 2,7mg/dL; Leucócitos: 19.000.",
@@ -88,6 +92,7 @@
     "source": "PDF Questão 16",
     "difficulty": "R2",
     "category": "Foco Gastrointestinal",
+    "categoryId": 5,
     "stage1": {
       "presentation": "Paciente de 68 anos, com histórico de hipertensão e diabetes, procura a emergência por quadro de diarreia aquosa, com cerca de 10 episódios por dia, associada a náusea, vômitos e dor abdominal.",
       "vitals": "PA: 80/40 mmHg; FC: 120 bpm; T: 35,6°C; SpO2: 92% em ar ambiente; Glasgow 15.",
@@ -108,6 +113,7 @@
     "source": "PDF Questão 20",
     "difficulty": "R3",
     "category": "Foco Pulmonar",
+    "categoryId": 1,
     "stage1": {
       "presentation": "Paciente de 57 anos, previamente hígido, deu entrada com quadro de pneumonia bacteriana. Apresentava febre de 38.7°C, instabilidade hemodinâmica e rebaixamento de consciência.",
       "vitals": "PA: 80x40 mmHg; FC: 122 bpm; FR: 26 irpm; Glasgow: 12.",
@@ -128,6 +134,7 @@
     "source": "PDF Questão 27",
     "difficulty": "R2",
     "category": "Foco Pulmonar",
+    "categoryId": 1,
     "stage1": {
       "presentation": "Paciente de 72 anos, diabético, foi admitido sonolento, hipoativo, taquipneico e febril, com história de tosse produtiva. Ausculta pulmonar com crepitações em base direita.",
       "vitals": "PA: 70/40 mmHg; FC: 126 bpm; FR: 28 irpm; SpO2: 81%; T: 39,1°C; Glasgow: 6.",
@@ -148,6 +155,7 @@
     "source": "PDF Questão 36",
     "difficulty": "R2",
     "category": "Foco Pulmonar",
+    "categoryId": 1,
     "stage1": {
       "presentation": "Paciente de 56 anos, internada há 7 dias, apresenta piora do estado geral, febre, tosse produtiva e dispneia. Ao exame: confusa e desorientada.",
       "vitals": "PA: 86x60 mmHg; FC: 112 bpm; FR: 28 irpm; Glasgow: 14.",
@@ -168,6 +176,7 @@
     "source": "PDF Questão 39",
     "difficulty": "R1",
     "category": "Foco Urinário",
+    "categoryId": 2,
     "stage1": {
       "presentation": "Mulher de 56 anos, com diabetes e hipertensão, chega ao PS desorientada e agitada, com história de febre há três dias.",
       "vitals": "FC: 104 bpm; FR: 28 ipm; PA: 100/80 mmHg; TEC: 4 segundos.",
@@ -192,6 +201,7 @@
     "source": "PDF Questão 54",
     "difficulty": "R3",
     "category": "Foco Urinário",
+    "categoryId": 2,
     "stage1": {
       "presentation": "Paciente feminina, 56 anos, com diagnóstico de pielonefrite. Está confusa e letárgica.",
       "vitals": "T: 39,2°C; PA: 62x40 mmHg; FC: 144 bpm; FR: 42 irpm.",
@@ -212,6 +222,7 @@
     "source": "PDF Questão 16",
     "difficulty": "R2",
     "category": "Foco Abdominal",
+    "categoryId": 4,
     "stage1": {
       "presentation": "Paciente de 68 anos, com histórico de hipertensão e diabetes, procura a emergência por quadro de diarreia aquosa, com cerca de 10 episódios por dia, associada a náusea, vômitos e dor abdominal.",
       "vitals": "PA: 80/40 mmHg; FC: 120 bpm; T: 35,6°C; SpO2: 92% em ar ambiente; Glasgow 15.",
@@ -232,6 +243,7 @@
     "source": "Gerado",
     "difficulty": "R2",
     "category": "Foco Neurológico",
+    "categoryId": 3,
     "stage1": {
       "presentation": "Uma estudante universitária de 21 anos é trazida à emergência pelos colegas de dormitório. Eles relatam que ela se queixou de dor de cabeça e sensibilidade à luz (fotofobia) ontem, e hoje acordou febril, confusa e com vômitos.",
       "vitals": "FC: 110 bpm, FR: 22 irpm, PA: 105/65 mmHg, T: 39.1°C, Glasgow: 14 (confusa).",

@@ -7,8 +7,8 @@ import { Wind, Shield, BrainCircuit, Stethoscope, HeartPulse, Waves, Droplet, Sy
  * @param {string} categoryName - O nome da categoria (ex: "Foco Pulmonar").
  * @returns {import('lucide-react').LucideIcon} O componente de ícone correspondente.
  */
-export const getCategoryIcon = (categoryName) => {
-  switch (categoryName) {
+export const getCategoryIcon = (categoryId) => {
+  switch (categoryId) {
     case 'Foco Pulmonar':
       return Wind; // CORREÇÃO: Usando o nome correto do componente
     case 'Foco Urinário':
