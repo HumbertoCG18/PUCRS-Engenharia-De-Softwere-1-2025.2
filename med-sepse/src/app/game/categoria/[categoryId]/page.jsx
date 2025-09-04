@@ -1,22 +1,27 @@
 "use client";
 
 import { useState, useEffect } from "react";
+// 1. Importar o hook useParams
+import { useParams } from 'next/navigation';
 import medicalCases from "@/data/cases.json";
 import categories from "@/data/categories.json";
 import GameOverSummary from '@/components/game/GameOverSummary';
 import ClinicalCase from "@/components/game/ClinicalCase";
 
-export default function CategoriaGamePage({ params }) {
-  // Estados para o jogo
+export default function CategoriaGamePage() {
+  // 2. Usar o hook para obter os parâmetros da URL
+  const params = useParams(); 
+  const { categoryId } = params;
+
   const [isGameOver, setIsGameOver] = useState(false);
   const [finalAnswers, setFinalAnswers] = useState(null);
   const [gameCase, setGameCase] = useState(null);
   const [categoryName, setCategoryName] = useState("");
 
   useEffect(() => {
-    // Verificamos se 'params' e 'params.categoryId' existem antes de fazer qualquer coisa
-    if (params && params.categoryId) {
-      const numericId = parseInt(params.categoryId, 10);
+    // A lógica agora é mais segura, pois o useEffect só roda quando categoryId muda
+    if (categoryId) {
+      const numericId = parseInt(categoryId, 10);
       
       const foundCase = medicalCases.find(c => c.categoryId === numericId);
       const foundCategory = categories.find(c => c.id === numericId);
@@ -24,14 +29,13 @@ export default function CategoriaGamePage({ params }) {
       setGameCase(foundCase);
       setCategoryName(foundCategory?.name || "Desconhecida");
     }
-  }, [params]); // O efeito agora depende do objeto 'params' inteiro
+  }, [categoryId]); // O efeito agora depende diretamente de 'categoryId'
 
   const handleGameEnd = (answers) => {
     setFinalAnswers(answers);
     setIsGameOver(true);
   };
 
-  // Se o caso ainda não foi carregado, mostramos um estado de carregamento
   if (!gameCase) {
     return (
       <div className="w-full max-w-2xl mx-auto py-8 pb-24 text-center">

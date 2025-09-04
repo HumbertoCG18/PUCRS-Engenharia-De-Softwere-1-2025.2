@@ -9,19 +9,19 @@ import { Wind, Shield, BrainCircuit, Stethoscope, HeartPulse, Waves, Droplet, Sy
  */
 export const getCategoryIcon = (categoryId) => {
   switch (categoryId) {
-    case 'Foco Pulmonar':
+    case 1 :
       return Wind; // CORREÇÃO: Usando o nome correto do componente
-    case 'Foco Urinário':
+    case 2:
       return Droplet;
-    case 'Foco Neurológico':
+    case 3:
       return BrainCircuit;
-    case 'Foco Abdominal':
+    case 4:
       return Shield
-    case 'Foco Gastrointestinal':
+    case 6:
       return Waves;
-    case 'Foco Cutâneo':
+    case 5:
       return HeartPulse;
-    case 'Foco Corrente Sanguínea':
+    case 7:
       return Syringe
     default:
       return Stethoscope;

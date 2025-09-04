@@ -23,5 +23,15 @@
     "id": 5,
     "name": "Foco Cutâneo",
     "description": "Infecções da pele e tecidos moles, como celulite."
+  },
+   {
+    "id": 6,
+    "name": "Foco Gastrointestinal",
+    "description": "Infecções originadas no trato digestivo, como gastroenterites."
+  },
+  {
+    "id": 7,
+    "name": "Foco Corrente Sanguínea",
+    "description": "Infecções primárias da corrente sanguínea, muitas vezes relacionadas a cateteres."
   }
 ]
