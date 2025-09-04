@@ -1,23 +1,22 @@
-// src/app/game/categoria/page.jsx
 import Link from 'next/link';
 import { Card, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
-import { medicalCases } from "@/data/dados";
-import { Stethoscope } from 'lucide-react';
+import medicalCases from "@/data/cases.json";
+import { getCategoryIcon } from '@/lib/icons';
 
 // Função para criar um "slug" amigável para a URL a partir do nome da categoria
 const slugify = (text) => {
   return text
     .toString()
     .toLowerCase()
-    .replace(/\s+/g, '-')           // Substitui espaços por -
-    .replace(/[^\w\-]+/g, '')       // Remove caracteres inválidos
-    .replace(/\-\-+/g, '-')         // Substitui múltiplos - por um único -
-    .replace(/^-+/, '')             // Remove - do início
-    .replace(/-+$/, '');            // Remove - do final
+    .replace(/\s+/g, '-')
+    .replace(/[^\w\-]+/g, '')
+    .replace(/\-\-+/g, '-')
+    .replace(/^-+/, '')
+    .replace(/-+$/, '');
 };
 
 export default function CategoriaSelectionPage() {
-  // Extrai todas as categorias únicas do nosso banco de dados de casos
+  // Extrai todas as categorias únicas da nossa base de dados
   const allCategories = medicalCases.map(c => c.category);
   const uniqueCategories = [...new Set(allCategories)];
 
@@ -31,19 +30,23 @@ export default function CategoriaSelectionPage() {
       </header>
 
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-        {uniqueCategories.map((category) => (
-          <Link key={category} href={`/game/categoria/${slugify(category)}`}>
-            <Card className="h-full hover:border-primary hover:bg-primary/5 transition-all">
-              <CardHeader>
-                <Stethoscope className="w-8 h-8 text-primary mb-2" />
-                <CardTitle>{category}</CardTitle>
-                <CardDescription>
-                  Resolver um caso de sepse com {category.toLowerCase()}.
-                </CardDescription>
-              </CardHeader>
-            </Card>
-          </Link>
-        ))}
+        {uniqueCategories.map((category) => {
+          const IconComponent = getCategoryIcon(category);
+          
+          return (
+            <Link key={category} href={`/game/categoria/${slugify(category)}`}>
+              <Card className="h-full hover:border-primary hover:bg-primary/5 transition-all">
+                <CardHeader>
+                  <IconComponent className="w-8 h-8 text-primary mb-2" />
+                  <CardTitle>{category}</CardTitle>
+                  <CardDescription>
+                    Resolver um caso de sepse com {category.toLowerCase()}.
+                  </CardDescription>
+                </CardHeader>
+              </Card>
+            </Link>
+          );
+        })}
       </div>
     </div>
   );

@@ -5,7 +5,7 @@
     "difficulty": "R2",
     "category": "Foco Pulmonar",
     "stage1": {
-      "presentation": "João, 68 anos, chega ao pronto-socorro com sua filha. Ele está visivelmente cansado e a filha relata que, nos últimos dois dias, ele apresentou febre alta (39,5°C), tosse com expectoração amarelada e falta de ar. O paciente é diabético e tem DPOC.",
+      "presentation": "João, 58 anos, chega ao pronto-socorro com sua filha. Ele está visivelmente cansado e a filha relata que, nos últimos dois dias, ele apresentou febre alta (39,5°C), tosse com expectoração amarelada e falta de ar. O paciente é diabético e tem DPOC.",
       "vitals": "FC: 115 bpm, FR: 28 irpm, PA: 100/60 mmHg, T: 38,8°C, SpO2: 90% em ar ambiente.",
       "question": "Com base nas informações fornecidas, há média ou alta probabilidade de o paciente ter sepse?",
       "options": ["Sim", "Não"],
@@ -206,5 +206,25 @@
       "correctOption": "Choque Séptico"
     },
     "finalDiagnosis": "Choque Séptico de Foco Urinário (Pielonefrite)"
+  },
+   {
+    "id": "case005",
+    "source": "PDF Questão 16",
+    "difficulty": "R2",
+    "category": "Foco Abdominal",
+    "stage1": {
+      "presentation": "Paciente de 68 anos, com histórico de hipertensão e diabetes, procura a emergência por quadro de diarreia aquosa, com cerca de 10 episódios por dia, associada a náusea, vômitos e dor abdominal.",
+      "vitals": "PA: 80/40 mmHg; FC: 120 bpm; T: 35,6°C; SpO2: 92% em ar ambiente; Glasgow 15.",
+      "question": "A presença de hipotensão e taquicardia sugere um quadro de disfunção orgânica?",
+      "options": ["Sim", "Não"],
+      "correctOption": "Sim"
+    },
+    "stage2": {
+      "presentation": "Gasometria arterial revela lactato de 4 mmol/L. Após reposição volêmica com cristaloides, a pressão arterial persiste em 85/45 mmHg, sendo necessário iniciar noradrenalina.",
+      "question": "Qual a classificação correta?",
+      "options": ["Sepse", "Choque Séptico"],
+      "correctOption": "Choque Séptico"
+    },
+    "finalDiagnosis": "Choque Séptico de Foco Abdominal"
   }
 ]
