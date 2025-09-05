@@ -3,19 +3,25 @@
     "id": "case001",
     "source": "Exemplo do Usuário",
     "difficulty": "R2",
-    "category": "Foco Pulmonar",
     "categoryId": 1,
     "stage1": {
-      "presentation": "João, 58 anos, chega ao pronto-socorro com sua filha. Ele está visivelmente cansado e a filha relata que, nos últimos dois dias, ele apresentou febre alta (39,5°C), tosse com expectoração amarelada e falta de ar. O paciente é diabético e tem DPOC.",
+      "presentation": "João, 68 anos, chega ao pronto-socorro com sua filha. Ele está visivelmente cansado e a filha relata que, nos últimos dois dias, ele apresentou febre alta (39,5°C), tosse com expectoração amarelada e falta de ar. O paciente é diabético e tem DPOC.",
       "vitals": "FC: 115 bpm, FR: 28 irpm, PA: 100/60 mmHg, T: 38,8°C, SpO2: 90% em ar ambiente.",
       "question": "Com base nas informações fornecidas, há média ou alta probabilidade de o paciente ter sepse?",
-      "options": ["Sim", "Não"],
       "correctOption": "Sim"
     },
+    "physicalExam": {
+      "Geral": "Confuso, fala com dificuldade, respira rapidamente."
+    },
+    "labResults": {
+      "Lactato": "2,5 mmol/L",
+      "Leucócitos": "18.000/mm³",
+      "Creatinina": "2,1 mg/dL",
+      "Plaquetas": "90.000/mm³"
+    },
     "stage2": {
-      "presentation": "Resultados laboratoriais chegam: Lactato: 2,5 mmol/L, Leucócitos: 18.000/mm³, Creatinina: 2,1 mg/dL, Plaquetas: 90.000/mm³. Você inicia fluidos IV, mas a PA continua caindo para 70/40 mmHg, necessitando início de noradrenalina.",
+      "presentation": "Você inicia fluidos IV, mas a PA continua caindo para 70/40 mmHg, necessitando início de noradrenalina.",
       "question": "Considerando a evolução e os novos dados, qual o diagnóstico mais provável?",
-      "options": ["Sepse", "Choque Séptico"],
       "correctOption": "Choque Séptico"
     },
     "finalDiagnosis": "Choque Séptico de Foco Pulmonar"
@@ -24,19 +30,22 @@
     "id": "case002",
     "source": "PDF Questão 1",
     "difficulty": "R3",
-    "category": "Foco Neurológico",
     "categoryId": 3,
     "stage1": {
       "presentation": "Homem de 34 anos, sem antecedentes mórbidos, é trazido ao PS por familiares relatando dois dias de cefaleia holocraniana com piora progressiva, associada a vômitos e febre de 39°C.",
-      "vitals": "FC: 113bpm; PA: 80x62mmHg; FR: 18ipm; SpO2: 96% em ar ambiente. Rigidez nucal presente.",
-      "question": "Este paciente apresenta sinais de disfunção orgânica (hipotensão e alteração neurológica)?",
-      "options": ["Sim", "Não"],
+      "vitals": "FC: 113bpm; PA: 80x62mmHg; FR: 18ipm; SpO2: 96% em ar ambiente.",
+      "question": "Este paciente apresenta sinais de disfunção orgânica?",
       "correctOption": "Sim"
     },
+    "physicalExam": {
+      "Neurológico": "Glasgow 10 (Abertura ocular aos chamados, sons incompreensíveis, localiza dor).","Geral": "Rigidez nucal presente."
+    },
+    "labResults": {
+      "Lactato": "3.2 mmol/L"
+    },
     "stage2": {
-      "presentation": "A equipe iniciou expansão volêmica. Após 1L de cristaloide, a PA se mantém em 82x60 mmHg. O lactato sérico resulta em 3.2 mmol/L.",
+      "presentation": "A equipe iniciou expansão volêmica. Após 1L de cristaloide, a PA se mantém em 82x60 mmHg.",
       "question": "Qual a classificação correta do quadro atual?",
-      "options": ["Sepse", "Choque Séptico"],
       "correctOption": "Choque Séptico"
     },
     "finalDiagnosis": "Choque Séptico de Foco Neurológico"
@@ -45,44 +54,44 @@
     "id": "case003",
     "source": "PDF Questão 5",
     "difficulty": "R2",
-    "category": "Foco Pulmonar",
     "categoryId": 1,
     "stage1": {
       "presentation": "Paciente de 76 anos é admitido com confusão mental, dispneia e rebaixamento do nível de consciência. Radiografia de tórax confirma pneumonia.",
       "vitals": "FR: 24ipm; FC: 110bpm; PA: 84/54 mmHg; Glasgow: 7.",
-      "question": "Este paciente preenche 2 ou mais critérios do qSOFA (FR ≥ 22, Glasgow < 15, PAS ≤ 100)?",
-      "options": ["Sim", "Não"],
+      "question": "Este paciente preenche 2 ou mais critérios do qSOFA?",
       "correctOption": "Sim"
     },
+    "physicalExam": {
+        "Geral": "Sonolento, confuso.",
+        "Perfusão": "Tempo de enchimento capilar de 5 segundos."
+    },
+    "labResults": {
+        "Lactato": "2.8 mmol/L"
+    },
     "stage2": {
-      "presentation": "Você inicia 30ml/kg de cristaloide. Após a infusão, a PA do paciente melhora para 110/70 mmHg, sem necessidade de vasopressores. O lactato sérico é de 2.8 mmol/L.",
+      "presentation": "Você inicia 30ml/kg de cristaloide. Após a infusão, a PA do paciente melhora para 110/70 mmHg, sem necessidade de vasopressores.",
       "question": "Qual o diagnóstico mais provável?",
-      "options": ["Sepse", "Choque Séptico"],
       "correctOption": "Sepse"
     },
-    "stage3": {
-        "question": "Qual a sua principal hipótese para o foco da infecção?",
-        "correctDiagnosisKeywords": ["pulmonar", "pneumonia"]
-    },
+    "stage3": { "question": "Qual a sua principal hipótese para o foco da infecção?" },
     "finalDiagnosis": "Sepse de Foco Pulmonar"
   },
   {
     "id": "case004",
     "source": "PDF Questão 8",
     "difficulty": "R1",
-    "category": "Foco Urinário",
     "categoryId": 2,
     "stage1": {
-      "presentation": "Homem, 54 anos de idade, hipertenso, é trazido ao PS com quadro de febre e rebaixamento de nível de consciência. Apresenta dor em flanco direito, disúria e polaciúria há três dias.",
-      "vitals": "FC: 120 bpm; PA: 80/40 mmHg; T: 38°C; TEC: 5 segundos. Exames: Cr: 2,7mg/dL; Leucócitos: 19.000.",
+      "presentation": "Homem, 54 anos, hipertenso, é trazido ao PS com febre e rebaixamento de nível de consciência. Apresenta dor em flanco direito e disúria há três dias.",
+      "vitals": "FC: 120 bpm; PA: 80/40 mmHg; T: 38°C.",
       "question": "Há evidência de disfunção orgânica?",
-      "options": ["Sim", "Não"],
       "correctOption": "Sim"
     },
+    "physicalExam": { "Perfusão": "TEC de 5 segundos.", "Abdominal": "Dor em flanco direito." },
+    "labResults": { "Lactato": "4.0 mmol/L (36mg/dL)", "Creatinina": "2,7mg/dL", "Leucócitos": "19.000/mm³", "Urina 1": "Leucocitúria, hematúria e nitrito positivo." },
     "stage2": {
-      "presentation": "O lactato arterial resulta em 4.0 mmol/L (36mg/dL). Após a infusão de 30ml/kg de cristaloides nas primeiras 3 horas, a pressão arterial não responde, mantendo-se em 85/45 mmHg.",
+      "presentation": "Após a infusão de 30ml/kg de cristaloides, a pressão arterial não responde, mantendo-se em 85/45 mmHg.",
       "question": "Qual o diagnóstico correto?",
-      "options": ["Sepse", "Choque Séptico"],
       "correctOption": "Choque Séptico"
     },
     "finalDiagnosis": "Choque Séptico de Foco Urinário"
@@ -91,19 +100,18 @@
     "id": "case005",
     "source": "PDF Questão 16",
     "difficulty": "R2",
-    "category": "Foco Gastrointestinal",
     "categoryId": 6,
     "stage1": {
-      "presentation": "Paciente de 68 anos, com histórico de hipertensão e diabetes, procura a emergência por quadro de diarreia aquosa, com cerca de 10 episódios por dia, associada a náusea, vômitos e dor abdominal.",
-      "vitals": "PA: 80/40 mmHg; FC: 120 bpm; T: 35,6°C; SpO2: 92% em ar ambiente; Glasgow 15.",
-      "question": "A presença de hipotensão e taquicardia sugere um quadro de disfunção orgânica?",
-      "options": ["Sim", "Não"],
+      "presentation": "Paciente de 68 anos, com histórico de hipertensão e diabetes, procura a emergência por quadro de diarreia aquosa, náuseas, vômitos e dor abdominal.",
+      "vitals": "PA: 80/40 mmHg; FC: 120 bpm; T: 35,6°C; SpO2: 92%; Glasgow 15.",
+      "question": "A presença de hipotensão e taquicardia sugere disfunção orgânica?",
       "correctOption": "Sim"
     },
+    "physicalExam": { "Perfusão": "TEC prolongado, pulsos finos, extremidades frias.", "Abdominal": "Dor leve à palpação difusa." },
+    "labResults": { "Lactato": "4 mmol/L", "Gasometria": "pH 7,26, pCO2 23 mmHg, Bic 10 mEq/L" },
     "stage2": {
-      "presentation": "Gasometria arterial revela lactato de 4 mmol/L. Após reposição volêmica com cristaloides, a pressão arterial persiste em 85/45 mmHg, sendo necessário iniciar noradrenalina.",
+      "presentation": "Após reposição volêmica, a pressão arterial persiste em 85/45 mmHg, sendo necessário iniciar noradrenalina.",
       "question": "Qual a classificação correta?",
-      "options": ["Sepse", "Choque Séptico"],
       "correctOption": "Choque Séptico"
     },
     "finalDiagnosis": "Choque Séptico de Foco Gastrointestinal"
@@ -112,19 +120,18 @@
     "id": "case006",
     "source": "PDF Questão 20",
     "difficulty": "R3",
-    "category": "Foco Pulmonar",
     "categoryId": 1,
     "stage1": {
       "presentation": "Paciente de 57 anos, previamente hígido, deu entrada com quadro de pneumonia bacteriana. Apresentava febre de 38.7°C, instabilidade hemodinâmica e rebaixamento de consciência.",
       "vitals": "PA: 80x40 mmHg; FC: 122 bpm; FR: 26 irpm; Glasgow: 12.",
       "question": "Os achados iniciais são compatíveis com um quadro de sepse?",
-      "options": ["Sim", "Não"],
       "correctOption": "Sim"
     },
+    "physicalExam": { "Neurológico": "Rebaixamento de consciência (Glasgow 12)." },
+    "labResults": { "Plaquetas": "77.000/mm³", "Lactato": "4,5 mmol/L", "Bilirrubina": "Elevada (hiperbilirrubinemia)" },
     "stage2": {
-      "presentation": "Exames revelaram trombocitopenia (77.000/mm³), hiperlactatemia (4,5 mmol/L) e hiperbilirrubinemia. A hipotensão não responde à ressuscitação volêmica adequada.",
+      "presentation": "A hipotensão não responde à ressuscitação volêmica adequada.",
       "question": "Qual o diagnóstico definitivo?",
-      "options": ["Sepse", "Choque Séptico"],
       "correctOption": "Choque Séptico"
     },
     "finalDiagnosis": "Choque Séptico de Foco Pulmonar"
@@ -133,19 +140,18 @@
     "id": "case007",
     "source": "PDF Questão 27",
     "difficulty": "R2",
-    "category": "Foco Pulmonar",
     "categoryId": 1,
     "stage1": {
       "presentation": "Paciente de 72 anos, diabético, foi admitido sonolento, hipoativo, taquipneico e febril, com história de tosse produtiva. Ausculta pulmonar com crepitações em base direita.",
       "vitals": "PA: 70/40 mmHg; FC: 126 bpm; FR: 28 irpm; SpO2: 81%; T: 39,1°C; Glasgow: 6.",
       "question": "Este paciente pontua 3 no qSOFA (FR ≥ 22, Glasgow < 15, PAS ≤ 100)?",
-      "options": ["Sim", "Não"],
       "correctOption": "Sim"
     },
+    "physicalExam": { "Neurológico": "Sonolento, hipoativo (Glasgow 6).", "Respiratório": "Crepitações em base pulmonar direita." },
+    "labResults": { "Leucócitos": "21.000 com 14% de bastões", "Lactato": "4.8 mmol/L" },
     "stage2": {
-      "presentation": "O hemograma evidencia leucocitose (21.000) com 14% de bastões. O lactato sérico é de 4.8 mmol/L. A hipotensão persiste mesmo após a administração de 2L de soro fisiológico.",
+      "presentation": "A hipotensão persiste mesmo após a administração de 2L de soro fisiológico.",
       "question": "Qual o diagnóstico mais provável?",
-      "options": ["Sepse", "Choque Séptico"],
       "correctOption": "Choque Séptico"
     },
     "finalDiagnosis": "Choque Séptico de Foco Pulmonar"
@@ -154,19 +160,18 @@
     "id": "case008",
     "source": "PDF Questão 36",
     "difficulty": "R2",
-    "category": "Foco Pulmonar",
     "categoryId": 1,
     "stage1": {
       "presentation": "Paciente de 56 anos, internada há 7 dias, apresenta piora do estado geral, febre, tosse produtiva e dispneia. Ao exame: confusa e desorientada.",
       "vitals": "PA: 86x60 mmHg; FC: 112 bpm; FR: 28 irpm; Glasgow: 14.",
       "question": "Há alta probabilidade de sepse?",
-      "options": ["Sim", "Não"],
       "correctOption": "Sim"
     },
+    "physicalExam": { "Neurológico": "Confusa e desorientada (Glasgow 14)." },
+    "labResults": { "Leucócitos": "18.250", "Plaquetas": "102.000", "Creatinina": "1.8 mg/dL", "Lactato": "4.1 mmol/L" },
     "stage2": {
-      "presentation": "Laboratório mostra Leucócitos: 18.250, Plaquetas: 102.000, Creatinina: 1.8 mg/dL e Lactato: 4.1 mmol/L. Após expansão volêmica, a PA sobe para 95/65 mmHg, mas o paciente continua precisando de vasopressor para manter a PAM > 65 mmHg.",
+      "presentation": "Após expansão volêmica, a PA sobe para 95/65 mmHg, mas o paciente continua precisando de vasopressor para manter a PAM > 65 mmHg.",
       "question": "Qual a classificação correta?",
-      "options": ["Sepse", "Choque Séptico"],
       "correctOption": "Choque Séptico"
     },
     "finalDiagnosis": "Choque Séptico de Foco Pulmonar (Pneumonia Hospitalar)"
@@ -175,65 +180,59 @@
     "id": "case009",
     "source": "PDF Questão 39",
     "difficulty": "R1",
-    "category": "Foco Urinário",
     "categoryId": 2,
     "stage1": {
       "presentation": "Mulher de 56 anos, com diabetes e hipertensão, chega ao PS desorientada e agitada, com história de febre há três dias.",
       "vitals": "FC: 104 bpm; FR: 28 ipm; PA: 100/80 mmHg; TEC: 4 segundos.",
-      "question": "Os sinais vitais (taquicardia, taquipneia) e a alteração de consciência sugerem disfunção orgânica?",
-      "options": ["Sim", "Não"],
+      "question": "Os sinais vitais e a alteração de consciência sugerem disfunção orgânica?",
       "correctOption": "Sim"
     },
+    "physicalExam": { "Neurológico": "Desorientada e agitada.", "Perfusão": "Tempo de enchimento capilar de 4 segundos." },
+    "labResults": { "Creatinina": "3.4 mg/dL", "Plaquetas": "128.000", "Lactato": "2.1 mmol/L", "Bilirrubina": "1.8 mg/dL" },
     "stage2": {
-      "presentation": "Exames mostram Creatinina: 3.4 mg/dL e Plaquetas: 128.000. Você administra fluidos e a PA se mantém em 105/80 mmHg, sem necessidade de vasopressores. O lactato é de 2.1 mmol/L.",
+      "presentation": "Você administra fluidos e a PA se mantém em 105/80 mmHg, sem necessidade de vasopressores.",
       "question": "Qual o diagnóstico mais provável?",
-      "options": ["Sepse", "Choque Séptico"],
       "correctOption": "Sepse"
     },
-    "stage3": {
-      "question": "Qual a sua principal hipótese para o foco da infecção?",
-      "correctDiagnosisKeywords": ["urinário", "pielonefrite", "cistite", "itu"]
-    },
+    "stage3": { "question": "Qual a sua principal hipótese para o foco da infecção?" },
     "finalDiagnosis": "Sepse de Foco Urinário"
   },
   {
     "id": "case010",
     "source": "PDF Questão 54",
     "difficulty": "R3",
-    "category": "Foco Urinário",
     "categoryId": 2,
     "stage1": {
       "presentation": "Paciente feminina, 56 anos, com diagnóstico de pielonefrite. Está confusa e letárgica.",
       "vitals": "T: 39,2°C; PA: 62x40 mmHg; FC: 144 bpm; FR: 42 irpm.",
       "question": "A hipotensão severa (PAM < 65 mmHg) é um sinal de alerta máximo?",
-      "options": ["Sim", "Não"],
       "correctOption": "Sim"
     },
+    "physicalExam": { "Neurológico": "Confusa e letárgica." },
+    "labResults": { "Lactato": "3,2 mEq/L" },
     "stage2": {
-      "presentation": "O lactato arterial é de 3,2 mEq/L. A paciente é submetida à expansão volêmica agressiva com soro fisiológico, porém a PA se mantém em 74x50 mmHg.",
+      "presentation": "A paciente é submetida à expansão volêmica agressiva, porém a PA se mantém em 74x50 mmHg.",
       "question": "Qual a classificação correta do quadro?",
-      "options": ["Sepse", "Choque Séptico"],
       "correctOption": "Choque Séptico"
     },
     "finalDiagnosis": "Choque Séptico de Foco Urinário (Pielonefrite)"
   },
-   {
+  {
     "id": "case011",
-    "source": "PDF Questão 16",
+    "source": "Gerado",
     "difficulty": "R2",
-    "category": "Foco Abdominal",
     "categoryId": 4,
     "stage1": {
       "presentation": "Paciente de 68 anos, com histórico de hipertensão e diabetes, procura a emergência por quadro de diarreia aquosa, com cerca de 10 episódios por dia, associada a náusea, vômitos e dor abdominal.",
       "vitals": "PA: 80/40 mmHg; FC: 120 bpm; T: 35,6°C; SpO2: 92% em ar ambiente; Glasgow 15.",
       "question": "A presença de hipotensão e taquicardia sugere um quadro de disfunção orgânica?",
-      "options": ["Sim", "Não"],
       "correctOption": "Sim"
     },
+    "physicalExam": { "Perfusão": "TEC prolongado, pulsos finos.", "Geral": "Extremidades frias e pegajosas." },
+    "labResults": { "Lactato": "4 mmol/L" },
     "stage2": {
       "presentation": "Gasometria arterial revela lactato de 4 mmol/L. Após reposição volêmica com cristaloides, a pressão arterial persiste em 85/45 mmHg, sendo necessário iniciar noradrenalina.",
       "question": "Qual a classificação correta?",
-      "options": ["Sepse", "Choque Séptico"],
       "correctOption": "Choque Séptico"
     },
     "finalDiagnosis": "Choque Séptico de Foco Abdominal"
@@ -242,19 +241,18 @@
     "id": "case012",
     "source": "Gerado",
     "difficulty": "R2",
-    "category": "Foco Neurológico",
     "categoryId": 3,
     "stage1": {
       "presentation": "Uma estudante universitária de 21 anos é trazida à emergência pelos colegas de dormitório. Eles relatam que ela se queixou de dor de cabeça e sensibilidade à luz (fotofobia) ontem, e hoje acordou febril, confusa e com vômitos.",
       "vitals": "FC: 110 bpm, FR: 22 irpm, PA: 105/65 mmHg, T: 39.1°C, Glasgow: 14 (confusa).",
       "question": "Com base na apresentação (febre, taquipneia, alteração de consciência), há alta suspeita de sepse?",
-      "options": ["Sim", "Não"],
       "correctOption": "Sim"
     },
+    "physicalExam": { "Neurológico": "Confusa, fotofobia." },
+    "labResults": { "Leucócitos": "16.500/mm³", "Plaquetas": "115.000/mm³", "Lactato": "2.3 mmol/L" },
     "stage2": {
-      "presentation": "Exames laboratoriais mostram Leucócitos: 16.500/mm³, Plaquetas: 115.000/mm³, Lactato: 2.3 mmol/L. Você administra 30ml/kg de cristaloides e a pressão arterial se estabiliza em 115/75 mmHg. A paciente permanece sonolenta, mas sem necessidade de vasopressores.",
+      "presentation": "Você administra 30ml/kg de cristaloides e a pressão arterial se estabiliza em 115/75 mmHg. A paciente permanece sonolenta, mas sem necessidade de vasopressores.",
       "question": "Qual a classificação correta do quadro atual?",
-      "options": ["Sepse", "Choque Séptico"],
       "correctOption": "Sepse"
     },
     "stage3": {

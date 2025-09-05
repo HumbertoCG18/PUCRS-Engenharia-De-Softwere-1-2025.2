@@ -1,5 +1,5 @@
 import { Flame, CheckCircle2, Circle, Stethoscope } from 'lucide-react';
-import { getDailyCase } from '@/lib/cases';
+import { getCases } from '@/lib/cases';
 
 export default function PlayerDashboard() {
   // Dados fictícios para o protótipo
@@ -10,7 +10,7 @@ export default function PlayerDashboard() {
     streak: 4,
   };
 
-  const dailyCase = getDailyCase();
+  const dailyCase = getCases();
   
   // Salvaguarda: Se não houver caso do dia, renderiza um estado de "vazio"
   if (!dailyCase) {

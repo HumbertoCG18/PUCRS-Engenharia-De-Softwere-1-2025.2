@@ -7,6 +7,7 @@ import { Input } from "@/components/ui/input";
 import { CheckCircle, XCircle } from "lucide-react";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 
+// Componente auxiliar para renderizar listas de objetos
 const ClinicalDataList = ({ dataObject }) => {
   if (!dataObject) return null;
   return (
@@ -20,13 +21,15 @@ const ClinicalDataList = ({ dataObject }) => {
   );
 };
 
-const VitalsDisplay = ({ vitalsString }) => {
-    if (!vitalsString) return null;
-    const vitalsArray = vitalsString.split(';').map(v => v.trim()).filter(v => v);
+// Componente para formatar strings de dados clínicos (como Sinais Vitais)
+const FormattedDataDisplay = ({ dataString }) => {
+    if (!dataString) return null;
+    // Quebra a string por vírgula ou ponto e vírgula, remove espaços e filtra itens vazios
+    const items = dataString.split(/[,;]/).map(item => item.trim()).filter(Boolean);
     return (
         <div className="font-mono text-sm p-3 bg-muted rounded-md space-y-1">
-            {vitalsArray.map((vital, index) => (
-                <p key={index}>{vital}{index < vitalsArray.length - 1 ? ';' : ''}</p>
+            {items.map((item, index) => (
+                <p key={index}>{item}</p>
             ))}
         </div>
     )
@@ -58,6 +61,11 @@ export default function ClinicalCase({ gameCase, onGameEnd }) {
     const finalAnswers = { ...answers, 3: { chosen: focusHypothesis }};
     onGameEnd(finalAnswers);
   };
+  
+  const hasPhysicalExam = gameCase.physicalExam && Object.keys(gameCase.physicalExam).length > 0;
+  const hasLabResults = gameCase.labResults && Object.keys(gameCase.labResults).length > 0;
+  const hasTabs = hasPhysicalExam || hasLabResults;
+  const defaultTab = hasPhysicalExam ? "exame_fisico" : "exames_lab";
 
   return (
     <div className="space-y-6">
@@ -68,7 +76,7 @@ export default function ClinicalCase({ gameCase, onGameEnd }) {
         </CardHeader>
         <CardContent className="space-y-4">
           <p className="text-foreground/90">{gameCase.stage1.presentation}</p>
-          <VitalsDisplay vitalsString={gameCase.stage1.vitals} />
+          <FormattedDataDisplay dataString={gameCase.stage1.vitals} />
           <div className="border-t pt-4">
             <p className="font-semibold mb-2">{gameCase.stage1.question}</p>
             <div className="grid grid-cols-2 gap-2">
@@ -92,18 +100,24 @@ export default function ClinicalCase({ gameCase, onGameEnd }) {
           <CardContent className="space-y-4">
             <p className="text-foreground/90">{gameCase.stage2.presentation}</p>
             
-            <Tabs defaultValue="exame_fisico" className="w-full">
-                <TabsList className="grid w-full grid-cols-2">
-                    <TabsTrigger value="exame_fisico">Exame Físico</TabsTrigger>
-                    <TabsTrigger value="exames_lab">Exames Laboratoriais</TabsTrigger>
-                </TabsList>
-                <TabsContent value="exame_fisico">
-                    <Card><CardContent className="pt-6"><ClinicalDataList dataObject={gameCase.physicalExam} /></CardContent></Card>
-                </TabsContent>
-                <TabsContent value="exames_lab">
-                    <Card><CardContent className="pt-6"><ClinicalDataList dataObject={gameCase.labResults} /></CardContent></Card>
-                </TabsContent>
-            </Tabs>
+            {hasTabs && (
+              <Tabs defaultValue={defaultTab} className="w-full">
+                  <TabsList className={`grid w-full ${hasPhysicalExam && hasLabResults ? 'grid-cols-2' : 'grid-cols-1'}`}>
+                      {hasPhysicalExam && <TabsTrigger value="exame_fisico">Exame Físico</TabsTrigger>}
+                      {hasLabResults && <TabsTrigger value="exames_lab">Exames Laboratoriais</TabsTrigger>}
+                  </TabsList>
+                  {hasPhysicalExam && (
+                    <TabsContent value="exame_fisico">
+                        <Card><CardContent className="pt-6"><ClinicalDataList dataObject={gameCase.physicalExam} /></CardContent></Card>
+                    </TabsContent>
+                  )}
+                  {hasLabResults && (
+                    <TabsContent value="exames_lab">
+                        <Card><CardContent className="pt-6"><ClinicalDataList dataObject={gameCase.labResults} /></CardContent></Card>
+                    </TabsContent>
+                  )}
+              </Tabs>
+            )}
 
             <div className="border-t pt-4">
               <p className="font-semibold mb-2">{gameCase.stage2.question}</p>
@@ -123,7 +137,6 @@ export default function ClinicalCase({ gameCase, onGameEnd }) {
       )}
 
       {/* Estágio 3: Hipótese do Foco */}
-      {/* CORREÇÃO AQUI: Verificamos se 'gameCase.stage3' e 'gameCase.stage3.question' existem */}
       {currentStage >= 3 && gameCase.stage3?.question && (
         <Card>
           <CardHeader><CardTitle>Estágio 3: Hipótese do Foco</CardTitle></CardHeader>
