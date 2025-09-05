@@ -3,10 +3,10 @@
 import { useParams } from 'next/navigation';
 import dynamic from 'next/dynamic';
 
-// A importação dinâmica com ssr: false continua sendo a melhor prática
+// Importação dinâmica com SSR desativado, como recomendado pela documentação
 const PdfViewer = dynamic(() => import('@/components/compendio/PdfViewer'), {
   ssr: false, 
-  loading: () => <p className="text-center text-muted-foreground">Carregando visualizador...</p>
+  loading: () => <p className="text-center text-muted-foreground mt-10">Carregando visualizador...</p>
 });
 
 export default function PdfViewerPage() {
@@ -16,7 +16,7 @@ export default function PdfViewerPage() {
   const pdfUrl = filename ? `/articles/${filename}` : null;
 
   if (!pdfUrl) {
-    return <div className="text-center">Nome do arquivo não encontrado.</div>;
+    return <div className="text-center mt-10">Nome do arquivo não encontrado.</div>;
   }
 
   return (

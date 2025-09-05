@@ -1,11 +1,12 @@
+// src/app/compendio/page.jsx
 "use client";
 
 import { useState } from "react";
 import Link from 'next/link';
 import { Input } from "@/components/ui/input";
-import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
+import { Card, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 import { Search, FileText } from "lucide-react";
-import articles from "@/data/articles.json"; // Importar nosso novo índice
+import articles from "@/data/articles.json";
 
 export default function CompendioPage() {
   const [searchTerm, setSearchTerm] = useState("");
@@ -38,7 +39,8 @@ export default function CompendioPage() {
 
       <div className="space-y-4">
         {filteredArticles.map(article => (
-          <Link key={article.id} href={`/compendio/${article.filename}`}>
+          // CORREÇÃO AQUI: Usando encodeURIComponent para o nome do arquivo
+          <Link key={article.id} href={`/compendio/${encodeURIComponent(article.filename)}`}>
             <Card className="hover:border-primary transition-colors">
               <CardHeader className="flex-row items-start gap-4">
                 <FileText className="w-8 h-8 text-primary mt-1 flex-shrink-0" />

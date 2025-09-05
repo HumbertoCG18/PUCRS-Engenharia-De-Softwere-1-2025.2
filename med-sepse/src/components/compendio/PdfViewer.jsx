@@ -1,14 +1,23 @@
 "use client";
 
 import { useState } from 'react';
+// 1. Importar os componentes e o 'pdfjs' da biblioteca correta
 import { Document, Page, pdfjs } from 'react-pdf';
+
+// 2. Importar os estilos necessários para a seleção de texto e links
 import 'react-pdf/dist/Page/AnnotationLayer.css';
 import 'react-pdf/dist/Page/TextLayer.css';
+
 import { Button } from '@/components/ui/button';
 import { ChevronLeft, ChevronRight, ZoomIn, ZoomOut } from 'lucide-react';
 
-// A SOLUÇÃO DIRETA: Apontamos para o arquivo que está na pasta /public
-pdfjs.GlobalWorkerOptions.workerSrc = `/pdf.worker.mjs`;
+// 3. A configuração MODERNA e RECOMENDADA do worker.
+// Isso encontra o worker correto dentro dos node_modules,
+// garantindo que a versão seja sempre a mesma da biblioteca principal.
+pdfjs.GlobalWorkerOptions.workerSrc = new URL(
+  'pdfjs-dist/build/pdf.worker.min.mjs',
+  import.meta.url,
+).toString();
 
 export default function PdfViewer({ fileUrl }) {
   const [numPages, setNumPages] = useState(null);
@@ -28,18 +37,18 @@ export default function PdfViewer({ fileUrl }) {
       <div className="bg-card border rounded-lg p-2 sticky top-4 z-10 flex items-center justify-center gap-2 mb-4">
         <Button onClick={goToPrevPage} disabled={pageNumber <= 1} variant="ghost" size="icon"><ChevronLeft /></Button>
         <span className="font-semibold text-sm">Página {pageNumber} de {numPages || '--'}</span>
-        <Button onClick={goToNextPage} disabled={pageNumber >= numPages} variant="ghost" size="icon"><ChevronRight /></Button>
+        <Button onClick={goToNextPage} disabled={!numPages || pageNumber >= numPages} variant="ghost" size="icon"><ChevronRight /></Button>
         <div className="w-px h-6 bg-border mx-2" />
         <Button onClick={() => setScale(s => s + 0.1)} variant="ghost" size="icon"><ZoomIn /></Button>
         <Button onClick={() => setScale(s => Math.max(s - 0.1, 0.5))} variant="ghost" size="icon"><ZoomOut /></Button>
       </div>
       
-      <div className="flex justify-center">
+      <div className="flex justify-center border rounded-md overflow-hidden">
         <Document
           file={fileUrl}
           onLoadSuccess={onDocumentLoadSuccess}
-          loading={<p className="text-muted-foreground">Carregando PDF...</p>}
-          error={<p className="text-destructive">Falha ao carregar o PDF.</p>}
+          loading={<div className="p-10 text-muted-foreground">Carregando PDF...</div>}
+          error={<div className="p-10 text-destructive">Falha ao carregar o PDF.</div>}
         >
           <Page pageNumber={pageNumber} scale={scale} />
         </Document>
