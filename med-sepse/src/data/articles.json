@@ -1,0 +1,37 @@
+[
+  {
+    "id": "art001",
+    "title": "Diretrizes de Manejo da Sepse e Choque Séptico (2021)",
+    "filename": "surviving-sepsis-campaign-2021-portuguese-translation (1).pdf",
+    "description": "Tradução oficial das diretrizes da Campanha de Sobrevivência à Sepse, focada no tratamento, manejo hemodinâmico, ventilação e terapias.",
+    "keywords": ["tratamento", "manejo", "diretriz", "2021", "vasopressores", "fluidos", "antibióticos", "ventilação", "pacote", "bundle"]
+  },
+  {
+    "id": "art002",
+    "title": "Definições do Consenso Sepsis-3",
+    "filename": "Sepsis-3 (1).pdf",
+    "description": "Artigo fundamental com as definições internacionais para Sepse e Choque Séptico, explicando os critérios SOFA e qSOFA.",
+    "keywords": ["definição", "diagnóstico", "Sepsis-3", "SOFA", "qSOFA", "SIRS", "consenso", "critérios"]
+  },
+  {
+    "id": "art003",
+    "title": "Banco de Questões de Sepse",
+    "filename": "Sepse.pdf",
+    "description": "Compilado com mais de 100 questões e casos clínicos sobre sepse para estudo e autoavaliação.",
+    "keywords": ["questões", "casos clínicos", "teste", "estudo", "avaliação", "banco"]
+  },
+  {
+    "id": "art004",
+    "title": "Resumo Rápido e Mapa Mental de Sepse",
+    "filename": "sepse1.pdf",
+    "description": "Um resumo visual e direto dos principais conceitos: patogênese, SIRS, qSOFA e o pacote de tratamento da primeira hora.",
+    "keywords": ["resumo", "mapa mental", "rápido", "SIRS", "patogênese", "fase quente", "fase fria"]
+  },
+  {
+    "id": "art005",
+    "title": "Fluxogramas e Escores de Triagem",
+    "filename": "sepse2.pdf",
+    "description": "Documento com ferramentas práticas para triagem, incluindo a escala de gravidade para pneumonia e a tabela do escore NEWS.",
+    "keywords": ["fluxograma", "escore", "triagem", "NEWS", "MEWS", "CURB-65", "PSI", "gravidade", "pneumonia"]
+  }
+]
