@@ -2,9 +2,11 @@
 import Link from 'next/link';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { Award, Target } from "lucide-react"; // Adicione Target, se ainda não estiver lá
+import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
+import { Award, Target } from "lucide-react";
 
-export default function GameOverSummary({ title, description, score, scoreLabel, children }) {
+// Adicionamos a prop 'incorrectCases'
+export default function GameOverSummary({ title, description, score, scoreLabel, children, incorrectCases = [] }) {
   
   const handleRetry = () => {
     window.location.reload();
@@ -27,8 +29,30 @@ export default function GameOverSummary({ title, description, score, scoreLabel,
           )}
 
           {children}
+
+          {/* NOVA SEÇÃO: Relatório de Erros Interativo */}
+          {incorrectCases.length > 0 && (
+            <div className="text-left">
+              <h3 className="font-semibold text-center mb-2">Relatório de Revisão</h3>
+              <Accordion type="single" collapsible className="w-full">
+                {incorrectCases.map((caseData, index) => (
+                  <AccordionItem value={`item-${index}`} key={index}>
+                    <AccordionTrigger>
+                      <span className="text-sm font-semibold">{caseData.finalDiagnosis} (ID: {caseData.id})</span>
+                    </AccordionTrigger>
+                    <AccordionContent className="space-y-3 text-xs">
+                      <p className="text-muted-foreground">{caseData.stage1.presentation}</p>
+                      <div className="p-2 rounded-md bg-background border">
+                        <p><strong>Sua Resposta:</strong> <span className="text-red-500 font-semibold">{caseData.userAnswers[2]?.chosen}</span></p>
+                        <p><strong>Resposta Correta:</strong> <span className="text-green-500 font-semibold">{caseData.userAnswers[2]?.correct}</span></p>
+                      </div>
+                    </AccordionContent>
+                  </AccordionItem>
+                ))}
+              </Accordion>
+            </div>
+          )}
           
-          {/* ALTERAÇÃO AQUI: De 'flex gap-2' para 'flex flex-col gap-2' */}
           <div className="flex flex-col gap-2"> 
             <Button onClick={handleRetry} variant="outline" className="w-full">Jogar Novamente</Button>
             <Button asChild className="w-full">
