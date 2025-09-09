@@ -5,7 +5,20 @@ import { Button } from "@/components/ui/button";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import { Award, Target } from "lucide-react";
 
-// Adicionamos a prop 'incorrectCases'
+// Componente auxiliar para renderizar listas de dados clínicos (Exame Físico, Labs)
+const ClinicalDataList = ({ dataObject }) => {
+  if (!dataObject || Object.keys(dataObject).length === 0) return null;
+  return (
+    <ul className="space-y-1 list-disc list-inside">
+      {Object.entries(dataObject).map(([key, value]) => (
+        <li key={key}>
+          <span className="font-semibold capitalize">{key.replace(/([A-Z])/g, ' $1')}: </span>{value}
+        </li>
+      ))}
+    </ul>
+  );
+};
+
 export default function GameOverSummary({ title, description, score, scoreLabel, children, incorrectCases = [] }) {
   
   const handleRetry = () => {
@@ -30,21 +43,44 @@ export default function GameOverSummary({ title, description, score, scoreLabel,
 
           {children}
 
-          {/* NOVA SEÇÃO: Relatório de Erros Interativo */}
+          {/* Relatório de Erros Aprimorado */}
           {incorrectCases.length > 0 && (
             <div className="text-left">
               <h3 className="font-semibold text-center mb-2">Relatório de Revisão</h3>
               <Accordion type="single" collapsible className="w-full">
                 {incorrectCases.map((caseData, index) => (
                   <AccordionItem value={`item-${index}`} key={index}>
+                    {/* Trigger sem o ID do caso */}
                     <AccordionTrigger>
-                      <span className="text-sm font-semibold">{caseData.finalDiagnosis} (ID: {caseData.id})</span>
+                      <span className="text-sm font-semibold text-left">{caseData.finalDiagnosis}</span>
                     </AccordionTrigger>
-                    <AccordionContent className="space-y-3 text-xs">
-                      <p className="text-muted-foreground">{caseData.stage1.presentation}</p>
-                      <div className="p-2 rounded-md bg-background border">
-                        <p><strong>Sua Resposta:</strong> <span className="text-red-500 font-semibold">{caseData.userAnswers[2]?.chosen}</span></p>
-                        <p><strong>Resposta Correta:</strong> <span className="text-green-500 font-semibold">{caseData.userAnswers[2]?.correct}</span></p>
+                    <AccordionContent className="space-y-4 text-xs">
+                      {/* Apresentação Inicial */}
+                      <div>
+                        <h4 className="font-bold mb-1">Apresentação</h4>
+                        <p className="text-muted-foreground">{caseData.stage1.presentation}</p>
+                      </div>
+                      
+                      {/* Exame Físico */}
+                      {caseData.physicalExam && (
+                        <div>
+                          <h4 className="font-bold mb-1">Exame Físico</h4>
+                          <ClinicalDataList dataObject={caseData.physicalExam} />
+                        </div>
+                      )}
+
+                      {/* Exames Laboratoriais */}
+                      {caseData.labResults && (
+                        <div>
+                          <h4 className="font-bold mb-1">Exames Laboratoriais</h4>
+                          <ClinicalDataList dataObject={caseData.labResults} />
+                        </div>
+                      )}
+                      
+                      {/* Bloco de Respostas */}
+                      <div className="p-2 rounded-md bg-background border mt-2">
+                        <p><strong>Sua Resposta:</strong> <span className="text-red-500 font-semibold">{caseData.userAnswers[2]?.chosen || "N/A"}</span></p>
+                        <p><strong>Resposta Correta:</strong> <span className="text-green-500 font-semibold">{caseData.userAnswers[2]?.correct || "N/A"}</span></p>
                       </div>
                     </AccordionContent>
                   </AccordionItem>
