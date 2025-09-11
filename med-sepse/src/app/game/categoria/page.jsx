@@ -1,7 +1,6 @@
-// src/app/game/categoria/page.jsx
 import Link from 'next/link';
 import { Card, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
-import categories from "@/data/categories.json"; // Importar a nova base de categorias
+import categories from "@/data/categories.json";
 import { getCategoryIcon } from '@/lib/icons';
 
 export default function CategoriaSelectionPage() {
@@ -17,7 +16,6 @@ export default function CategoriaSelectionPage() {
         {categories.map((category) => {
           const IconComponent = getCategoryIcon(category.id);
           return (
-            // O link agora usa o ID numérico da categoria
             <Link key={category.id} href={`/game/categoria/${category.id}`}>
               <Card className="h-full hover:border-primary hover:bg-primary/5 transition-all">
                 <CardHeader>

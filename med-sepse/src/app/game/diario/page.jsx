@@ -12,23 +12,19 @@ export default function DiarioPage() {
   const [isGameOver, setIsGameOver] = useState(false);
   const [finalAnswers, setFinalAnswers] = useState(null);
   const [gameCase, setGameCase] = useState(null);
-  const [hasPlayedToday, setHasPlayedToday] = useState(false);
-  
-  // 1. Estado para controlar se o componente já "montou" no cliente
+  const [hasPlayedToday, setHasPlayedToday] = useState(false);  
   const [isClient, setIsClient] = useState(false);
 
   useEffect(() => {
-    // 2. Este efeito roda apenas uma vez no cliente
     setIsClient(true);
 
-    // Lógica que depende do navegador (new Date() e localStorage)
     const todayString = new Date().toISOString().split('T')[0];
     const lastPlayed = localStorage.getItem('lastPlayedDaily');
     
     if (lastPlayed === todayString) {
       setHasPlayedToday(true);
     } else {
-      // Função para selecionar o caso do dia de forma determinística
+
       const startDate = new Date('2024-01-01');
       const today = new Date();
       const diffTime = Math.abs(today - startDate);
@@ -47,12 +43,10 @@ export default function DiarioPage() {
     setIsGameOver(true);
   };
 
-  // 3. Renderiza um placeholder nulo no servidor e na primeira renderização do cliente
   if (!isClient) {
-    return null; // ou um componente de "spinner" / "loading"
+    return null;
   }
 
-  // A partir daqui, o código só roda no cliente com os dados corretos
   if (hasPlayedToday) {
     return (
         <div className="w-full max-w-md mx-auto py-8 pb-24 text-center">

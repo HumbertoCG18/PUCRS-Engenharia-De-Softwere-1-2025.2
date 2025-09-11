@@ -1,7 +1,6 @@
 "use client";
 
 import { useState, useEffect } from "react";
-// 1. Importar o hook useParams
 import { useParams } from 'next/navigation';
 import medicalCases from "@/data/cases.json";
 import categories from "@/data/categories.json";
@@ -9,7 +8,6 @@ import GameOverSummary from '@/components/game/GameOverSummary';
 import ClinicalCase from "@/components/game/ClinicalCase";
 
 export default function CategoriaGamePage() {
-  // 2. Usar o hook para obter os parâmetros da URL
   const params = useParams(); 
   const { categoryId } = params;
 
@@ -19,7 +17,6 @@ export default function CategoriaGamePage() {
   const [categoryName, setCategoryName] = useState("");
 
   useEffect(() => {
-    // A lógica agora é mais segura, pois o useEffect só roda quando categoryId muda
     if (categoryId) {
       const numericId = parseInt(categoryId, 10);
       
@@ -29,7 +26,7 @@ export default function CategoriaGamePage() {
       setGameCase(foundCase);
       setCategoryName(foundCategory?.name || "Desconhecida");
     }
-  }, [categoryId]); // O efeito agora depende diretamente de 'categoryId'
+  }, [categoryId]);
 
   const handleGameEnd = (answers) => {
     setFinalAnswers(answers);

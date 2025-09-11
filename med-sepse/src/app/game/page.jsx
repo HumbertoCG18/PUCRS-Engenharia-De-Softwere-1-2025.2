@@ -1,4 +1,3 @@
-// src/app/game/page.jsx
 import Link from 'next/link';
 import { Card, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 import { Zap, Timer, Book, Dumbbell, Calendar, ArrowRight } from 'lucide-react';

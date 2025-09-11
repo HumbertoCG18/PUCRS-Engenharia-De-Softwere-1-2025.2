@@ -35,8 +35,6 @@ export default function CompendioPage() {
           onChange={(e) => setSearchTerm(e.target.value)}
         />
       </div>
-
-      {/* ALTERAÇÃO 1: Aumentar o espaçamento de 'space-y-6' para 'space-y-8' */}
       <div className="space-y-9 space-x-1"> 
         {filteredArticles.length > 0 ? (
           filteredArticles.map(article => (

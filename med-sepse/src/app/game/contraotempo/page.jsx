@@ -21,11 +21,9 @@ const shuffleArray = (array) => {
 
 export default function ContraOTempoPage() {
   const [timeLeft, setTimeLeft] = useState(GAME_DURATION);
-  // NOVOS ESTADOS para contadores e relatório
   const [correctCount, setCorrectCount] = useState(0);
   const [incorrectCount, setIncorrectCount] = useState(0);
   const [incorrectCases, setIncorrectCases] = useState([]);
-  
   const [currentCaseIndex, setCurrentCaseIndex] = useState(0);
   const [isGameOver, setIsGameOver] = useState(false);
   const [gameCases, setGameCases] = useState([]);
@@ -60,7 +58,6 @@ export default function ContraOTempoPage() {
       setCorrectCount(prev => prev + 1);
     } else {
       setIncorrectCount(prev => prev + 1);
-      // Guarda o caso e as respostas para o relatório final
       setIncorrectCases(prev => [...prev, { ...currentCase, userAnswers: answers }]);
     }
 
@@ -89,7 +86,7 @@ export default function ContraOTempoPage() {
         description="Seu desempenho no modo Contrarrelógio."
         score={`${correctCount} / ${correctCount + incorrectCount}`}
         scoreLabel="Casos classificados corretamente"
-        incorrectCases={incorrectCases} // Passa os casos errados para o sumário
+        incorrectCases={incorrectCases}
       />
     );
   }
@@ -119,7 +116,6 @@ export default function ContraOTempoPage() {
         </div>
         <Progress value={(timeLeft / GAME_DURATION) * 100} className="w-full mt-2" />
       </header>
-      
       <div className="mt-6">
         <p className="text-center text-sm text-muted-foreground mb-2">Caso {currentCaseIndex + 1} de {gameCases.length}</p>
         <ClinicalCase 

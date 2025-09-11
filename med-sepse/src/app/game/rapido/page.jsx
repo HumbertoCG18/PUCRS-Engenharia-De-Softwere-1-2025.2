@@ -23,7 +23,6 @@ export default function RapidoPage() {
   useEffect(() => {
     if (isGameOver || timeLeft <= 0) {
       if (timeLeft <= 0 && !isGameOver) {
-        // CORREÇÃO: Define um valor para finalAnswers quando o tempo acaba
         setFinalAnswers({ 1: { chosen: "N/A", correct: "N/A" }, 2: { chosen: "N/A", correct: "N/A" }});
         setIsGameOver(true);
       }
@@ -68,7 +67,6 @@ export default function RapidoPage() {
               <div>
                 <p>
                   <strong>Suspeita de Sepse:</strong> 
-                  {/* CORREÇÃO: Lógica de exibição mais robusta */}
                   {finalAnswers[1]?.chosen !== "N/A" ? (
                     <span className={finalAnswers[1]?.chosen === finalAnswers[1]?.correct ? 'text-green-600' : 'text-red-600'}>
                       {` ${finalAnswers[1]?.chosen} `}
