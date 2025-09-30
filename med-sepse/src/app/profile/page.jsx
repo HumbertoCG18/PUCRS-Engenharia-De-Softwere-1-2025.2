@@ -6,6 +6,7 @@ import { Progress } from "@/components/ui/progress";
 import { User, Settings, Shield, Award, Users, Target, Zap, Flame, Wind } from "lucide-react";
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts';
 import userData from "@/data/userData.json";
+import Link from 'next/link';
 import teamData from "@/data/teamData.json";
 
 // Mapeamento de ícones para os emblemas
@@ -44,7 +45,11 @@ export default function ProfilePage() {
             <p className="text-xs text-muted-foreground mt-1">{userData.xp} / {userData.xpToNextLevel} XP para o próximo nível</p>
           </div>
         </div>
-        <Button variant="outline"><Settings className="w-4 h-4 mr-2" /> Editar Perfil</Button>
+       <Button asChild variant="outline">
+          <Link href="/profile/settings">
+            <Settings className="w-4 h-4 mr-2" /> Editar Perfil
+          </Link>
+        </Button>
       </section>
 
       {/* Seção de Emblemas (Conquistas) */}
