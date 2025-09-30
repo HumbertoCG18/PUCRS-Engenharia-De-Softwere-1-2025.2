@@ -1,0 +1,27 @@
+{
+  "id": "user001",
+  "name": "Dr. Humberto Gomes",
+  "level": "R2 - Residente",
+  "points": 3950,
+  "xp": 350,
+  "xpToNextLevel": 1000,
+  "streak": 7,
+  "hospital": "Hospital São Lucas da PUCRS",
+  "badges": [
+    { "name": "Mestre Pulmonar", "description": "Acertou 5 casos de Foco Pulmonar.", "icon": "Wind" },
+    { "name": "Precisão Diagnóstica", "description": "Acertou 10 casos sem erros.", "icon": "Target" },
+    { "name": "Velocista", "description": "Completou o Modo Rápido em menos de 2 minutos.", "icon": "Zap" },
+    { "name": "Semana Perfeita", "description": "Completou o Caso do Dia 7 dias seguidos.", "icon": "Flame" }
+  ],
+  "stats": {
+    "totalCases": 25,
+    "correctDiagnoses": 21,
+    "averageTime": "3:45 min",
+    "performanceByCategory": [
+      { "name": "Pulmonar", "acertos": 5, "total": 6 },
+      { "name": "Urinário", "acertos": 7, "total": 8 },
+      { "name": "Neurológico", "acertos": 4, "total": 5 },
+      { "name": "Abdominal", "acertos": 5, "total": 6 }
+    ]
+  }
+}
