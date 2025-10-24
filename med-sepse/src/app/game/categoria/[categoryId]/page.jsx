@@ -1,77 +1,69 @@
-"use client";
+// med-sepse/src/app/game/categoria/[categoryId]/page.js
+import fs from "fs/promises";
+import path from "path";
 
-import { useState, useEffect } from "react";
-import { useParams } from 'next/navigation';
-import medicalCases from "@/data/cases.json";
-import categories from "@/data/categories.json";
-import GameOverSummary from '@/components/game/GameOverSummary';
-import ClinicalCase from "@/components/game/ClinicalCase";
-
-export default function CategoriaGamePage() {
-  const params = useParams(); 
-  const { categoryId } = params;
-
-  const [isGameOver, setIsGameOver] = useState(false);
-  const [finalAnswers, setFinalAnswers] = useState(null);
-  const [gameCase, setGameCase] = useState(null);
-  const [categoryName, setCategoryName] = useState("");
-
-  useEffect(() => {
-    if (categoryId) {
-      const numericId = parseInt(categoryId, 10);
-      
-      const foundCase = medicalCases.find(c => c.categoryId === numericId);
-      const foundCategory = categories.find(c => c.id === numericId);
-      
-      setGameCase(foundCase);
-      setCategoryName(foundCategory?.name || "Desconhecida");
-    }
-  }, [categoryId]);
-
-  const handleGameEnd = (answers) => {
-    setFinalAnswers(answers);
-    setIsGameOver(true);
-  };
-
-  if (!gameCase) {
-    return (
-      <div className="w-full max-w-2xl mx-auto py-8 pb-24 text-center">
-        <p className="text-muted-foreground">Carregando caso clínico...</p>
-      </div>
-    );
+// Encontra fonte de categorias: um JSON ou um diretório
+async function findCategoriesSource() {
+  const fileCandidates = [
+    path.join(process.cwd(), "src", "data", "categories.json"),
+    path.join(process.cwd(), "data", "categories.json")
+  ];
+  for (const f of fileCandidates) {
+    try {
+      const st = await fs.stat(f);
+      if (st.isFile()) return { type: "file", path: f };
+    } catch {}
   }
+  const dirCandidates = [
+    path.join(process.cwd(), "src", "data", "games", "categories"),
+    path.join(process.cwd(), "data", "games", "categories")
+  ];
+  for (const d of dirCandidates) {
+    try {
+      const st = await fs.stat(d);
+      if (st.isDirectory()) return { type: "dir", path: d };
+    } catch {}
+  }
+  return null;
+}
 
+export async function generateStaticParams() {
+  const src = await findCategoriesSource();
+  if (!src) {
+    console.warn("[categoria] fonte não encontrada; gerando 0 rotas");
+    return [];
+  }
+  if (src.type === "file") {
+    try {
+      const txt = await fs.readFile(src.path, "utf8");
+      const arr = JSON.parse(txt);
+      if (!Array.isArray(arr)) return [];
+      return arr.map((c) => ({ categoryId: String(c.id ?? c.slug ?? c.name) }));
+    } catch (e) {
+      console.warn("[categoria] erro lendo JSON:", e.message);
+      return [];
+    }
+  } else {
+    try {
+      const files = await fs.readdir(src.path);
+      return files
+        .filter((f) => !f.startsWith("."))
+        .map((f) => ({ categoryId: f.replace(/\.(json|md|txt)$/, "") }));
+    } catch {
+      return [];
+    }
+  }
+}
+
+// (Opcional: evita fallback dinâmico)
+export const dynamicParams = false;
+
+export default function Page({ params }) {
+  const id = params?.categoryId;
   return (
-    <div className="w-full max-w-2xl mx-auto py-8 pb-24">
-      <header className="mb-4 text-center">
-        <h1 className="text-3xl font-bold">Jogo por Categoria</h1>
-        <p className="text-muted-foreground mt-1">{categoryName}</p>
-      </header>
-
-      {isGameOver ? (
-        <GameOverSummary
-          title="Caso Finalizado!"
-          description={`Veja o resumo do seu raciocínio para ${categoryName.toLowerCase()}.`}
-        >
-          {finalAnswers && (
-            <div className="p-4 rounded-lg border bg-muted/50 space-y-3 text-left text-sm">
-                <div>
-                    <p><strong>Suspeita de Sepse:</strong> <span className={finalAnswers[1]?.chosen === finalAnswers[1]?.correct ? 'text-green-600' : 'text-red-600'}>{finalAnswers[1]?.chosen}</span> (Correto: {finalAnswers[1]?.correct})</p>
-                </div>
-                <div>
-                    <p><strong>Diagnóstico:</strong> <span className={finalAnswers[2]?.chosen === finalAnswers[2]?.correct ? 'text-green-600' : 'text-red-600'}>{finalAnswers[2]?.chosen}</span> (Correto: {finalAnswers[2]?.correct})</p>
-                </div>
-                {finalAnswers[3] && (
-                    <div>
-                        <p><strong>Hipótese de Foco:</strong> {finalAnswers[3]?.chosen}</p>
-                    </div>
-                )}
-            </div>
-          )}
-        </GameOverSummary>
-      ) : (
-        <ClinicalCase gameCase={gameCase} onGameEnd={handleGameEnd} />
-      )}
-    </div>
+    <main style={{ padding: 16 }}>
+      <h1>Categoria: {id}</h1>
+      <p>Substitua este componente pela sua UI de categoria.</p>
+    </main>
   );
 }
