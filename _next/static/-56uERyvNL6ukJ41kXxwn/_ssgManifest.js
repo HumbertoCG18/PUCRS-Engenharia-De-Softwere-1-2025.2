@@ -1,0 +1,1 @@
+self.__SSG_MANIFEST=new Set(["\u002Fcompendio\u002F[filename]","\u002Fgame\u002Fcase\u002F[id]","\u002Fgame\u002Fcategoria\u002F[categoryId]"]);self.__SSG_MANIFEST_CB&&self.__SSG_MANIFEST_CB()
