@@ -1,173 +1,143 @@
 "use client";
 
-import { useState } from "react";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import { useAuth } from '@/contexts/AuthContext';
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { Separator } from "@/components/ui/separator";
-import { Switch } from "@/components/ui/switch";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { Label } from "@/components/ui/label";
-import { ChevronsRight, LogOut, Info, Bug } from "lucide-react";
+import { Progress } from "@/components/ui/progress";
+import { User, Settings, Shield, Award, Users, Target, Zap, Flame, Wind, Crown, BrainCircuit, ClipboardCheck, CalendarClock } from "lucide-react";
+import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts';
+import Link from 'next/link';
+import teamData from "@/data/teamData.json"; // Mantemos a equipe estática por enquanto
 
-export default function SettingsPage() {
-  // Estados para controlar as opções (simulação)
-  const [isGoogleDriveConnected, setIsGoogleDriveConnected] = useState(false);
-  const [isNotionConnected, setIsNotionConnected] = useState(true);
-  const [isAnkiConnected, setIsAnkiConnected] = useState(true);
-  const [isOfficeConnected, setIsOfficeConnected] = useState(true);
-  const [isZoteroConnected, setIsZoteroConnected] = useState(true);
+// Mapeamento de ícones
+const badgeIcons = {
+  Wind, Target, Zap, Flame, Crown, BrainCircuit, ClipboardCheck, CalendarClock
+};
 
+const PerformanceChart = ({ data }) => (
+  <ResponsiveContainer width="100%" height={300}>
+    <BarChart data={data} margin={{ top: 5, right: 20, left: -10, bottom: 5 }}>
+      <CartesianGrid strokeDasharray="3 3" opacity={0.3}/>
+      <XAxis dataKey="name" fontSize={12} tickLine={false} axisLine={false} />
+      <YAxis fontSize={12} tickLine={false} axisLine={false} />
+      <Tooltip cursor={{ fill: 'hsl(var(--muted))' }} contentStyle={{ backgroundColor: 'hsl(var(--card))', border: '1px solid hsl(var(--border))' }}/>
+      <Bar dataKey="acertos" fill="hsl(var(--primary))" name="Acertos" radius={[4, 4, 0, 0]} />
+    </BarChart>
+  </ResponsiveContainer>
+);
 
-  
-  // Estados para as unidades de medida
-  const [tempUnit, setTempUnit] = useState("C");
-  const [weightUnit, setWeightUnit] = useState("kg");
-  const [lactateUnit, setLactateUnit] = useState("mmol/L");
-  const [glucoseUnit, setGlucoseUnit] = useState("mg/dL");
-  const [creatinineUnit, setCreatinineUnit] = useState("mg/dL");
+export default function ProfilePage() {
+  const { user } = useAuth();
+
+  if (!user) return <div className="flex justify-center p-8">Carregando perfil...</div>;
+
+  const userData = user.profileData;
+  const xpPercentage = (userData.xp / userData.xpToNextLevel) * 100;
 
   return (
-    <div className="w-full max-w-2xl mx-auto py-8 pb-24">
-      <header className="mb-8">
-        <h1 className="text-3xl font-bold">Configurações</h1>
-        <p className="text-muted-foreground">
-          Gerencie suas preferências e conexões.
-        </p>
-      </header>
+    <div className="w-full max-w-4xl mx-auto py-8 pb-24 space-y-8">
+      {/* Cabeçalho do Perfil */}
+      <section className="flex flex-col sm:flex-row items-center gap-6">
+        <div className="w-24 h-24 bg-primary/10 rounded-full flex items-center justify-center border-2 border-primary overflow-hidden">
+            {user.avatarUrl ? (
+                <img src={user.avatarUrl} alt={user.name} className="w-full h-full object-cover" />
+            ) : (
+                <User className="w-12 h-12 text-primary" />
+            )}
+        </div>
+        <div className="flex-grow text-center sm:text-left">
+          <h1 className="text-3xl font-bold">{user.name}</h1>
+          <p className="text-muted-foreground">{user.title} @ {userData.hospital}</p>
+          <div className="mt-2">
+            <Progress value={xpPercentage} className="w-full h-2" />
+            <p className="text-xs text-muted-foreground mt-1">{userData.xp} / {userData.xpToNextLevel} XP para o próximo nível (Nível {userData.level})</p>
+          </div>
+        </div>
+        <Button asChild variant="outline">
+          <Link href="/profile/settings">
+            <Settings className="w-4 h-4 mr-2" /> Configurações
+          </Link>
+        </Button>
+      </section>
 
-      <Card>
-        <CardHeader>
-          <CardTitle>Conexões</CardTitle>
-          <CardDescription>Integre o MedSeps com outras ferramentas.</CardDescription>
-        </CardHeader>
-        <CardContent className="space-y-4">
-          <div className="flex items-center justify-between">
-            <Label htmlFor="gdrive-switch">Google Drive</Label>
-            <Switch id="gdrive-switch" checked={isGoogleDriveConnected} onCheckedChange={setIsGoogleDriveConnected} />
-          </div>
-          <div className="flex items-center justify-between">
-            <Label htmlFor="notion-switch">Notion</Label>
-            <Switch id="notion-switch" checked={isNotionConnected} onCheckedChange={setIsNotionConnected} />
-          </div>
-          <div className="flex items-center justify-between">
-            <Label htmlFor="anki-switch">Anki</Label>
-            <Switch id="anki-switch" checked={isAnkiConnected} onCheckedChange={setIsAnkiConnected} />
-          </div>
-          <div className="flex items-center justify-between">
-            <Label htmlFor="office-switch">Office 365</Label>
-            <Switch id="office-switch" checked={isOfficeConnected} onCheckedChange={setIsOfficeConnected} />
-          </div>
-          <div className="flex items-center justify-between">
-            <Label htmlFor="office-switch">Anki</Label>
-            <Switch id="office-switch" checked={isOfficeConnected} onCheckedChange={setIsOfficeConnected} />
-          </div>
-          <div className="flex items-center justify-between">
-            <Label htmlFor="zotero-switch">Zotero</Label>
-            <Switch id="zotero-switch" checked={isZoteroConnected} onCheckedChange={setIsZoteroConnected} />
-          </div>
-        </CardContent>
+      {/* Conquistas */}
+      <section>
+        <h2 className="text-2xl font-semibold mb-4 flex items-center gap-2"><Award /> Conquistas</h2>
+        {userData.badges.length > 0 ? (
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+            {userData.badges.map((badge, index) => {
+                const Icon = badgeIcons[badge.icon] || Award;
+                return (
+                <Card key={index} className="flex flex-col items-center justify-center p-4 text-center hover:bg-muted/50 transition-colors">
+                    <Icon className="w-10 h-10 text-primary mb-2"/>
+                    <p className="font-semibold text-sm">{badge.name}</p>
+                    <p className="text-xs text-muted-foreground mt-1">{badge.description}</p>
+                </Card>
+                );
+            })}
+            </div>
+        ) : (
+            <Card className="p-6 text-center text-muted-foreground">
+                Você ainda não possui conquistas. Jogue para desbloquear!
+            </Card>
+        )}
+      </section>
 
-        <Separator />
+      {/* Estatísticas */}
+      <section>
+        <h2 className="text-2xl font-semibold mb-4 flex items-center gap-2"><Shield /> Estatísticas</h2>
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-4">
+             <Card className="p-4 text-center">
+                <p className="text-3xl font-bold text-primary">{userData.stats.totalCases}</p>
+                <p className="text-sm text-muted-foreground">Casos Totais</p>
+             </Card>
+             <Card className="p-4 text-center">
+                <p className="text-3xl font-bold text-green-500">{userData.stats.correctDiagnoses}</p>
+                <p className="text-sm text-muted-foreground">Diagnósticos Corretos</p>
+             </Card>
+             <Card className="p-4 text-center">
+                <p className="text-3xl font-bold text-blue-500">{userData.stats.averageTime}</p>
+                <p className="text-sm text-muted-foreground">Tempo Médio</p>
+             </Card>
+        </div>
+        <Card>
+          <CardHeader>
+            <CardTitle>Desempenho por Categoria</CardTitle>
+          </CardHeader>
+          <CardContent>
+            {userData.stats.performanceByCategory.length > 0 ? (
+                <PerformanceChart data={userData.stats.performanceByCategory} />
+            ) : (
+                <div className="h-[300px] flex items-center justify-center text-muted-foreground">
+                    Sem dados suficientes para gerar gráfico.
+                </div>
+            )}
+          </CardContent>
+        </Card>
+      </section>
 
-        <CardHeader>
-          <CardTitle>Métricas</CardTitle>
-          <CardDescription>Personalize as unidades de medida exibidas nos casos.</CardDescription>
-        </CardHeader>
-        {/* Adicionado 'space-y-6' para mais espaçamento */}
-        <CardContent className="space-y-6">
-          {/* Clínicas Gerais */}
-          <div className="flex items-center justify-between">
-            <Label>Temperatura</Label>
-            <Select value={tempUnit} onValueChange={setTempUnit}>
-              <SelectTrigger className="w-[180px]">
-                <SelectValue placeholder="Selecione a unidade" />
-              </SelectTrigger>
-              <SelectContent>
-                <SelectItem value="C">Celsius (°C)</SelectItem>
-                <SelectItem value="F">Fahrenheit (°F)</SelectItem>
-              </SelectContent>
-            </Select>
-          </div>
-          <div className="flex items-center justify-between">
-            <Label>Peso</Label>
-            <Select value={weightUnit} onValueChange={setWeightUnit}>
-              <SelectTrigger className="w-[180px]">
-                <SelectValue placeholder="Selecione a unidade" />
-              </SelectTrigger>
-              <SelectContent>
-                <SelectItem value="kg">Quilogramas (kg)</SelectItem>
-                <SelectItem value="lbs">Libras (lbs)</SelectItem>
-              </SelectContent>
-            </Select>
-          </div>
-
-          {/* Separador sutil para exames laboratoriais */}
-          <Separator className="my-4" />
-
-          {/* Exames Laboratoriais */}
-          <div className="flex items-center justify-between">
-            <Label>Lactato</Label>
-            <Select value={lactateUnit} onValueChange={setLactateUnit}>
-              <SelectTrigger className="w-[180px]">
-                <SelectValue placeholder="Selecione a unidade" />
-              </SelectTrigger>
-              <SelectContent>
-                <SelectItem value="mmol/L">mmol/L</SelectItem>
-                <SelectItem value="mg/dL">mg/dL</SelectItem>
-              </SelectContent>
-            </Select>
-          </div>
-          <div className="flex items-center justify-between">
-            <Label>Glicose</Label>
-            <Select value={glucoseUnit} onValueChange={setGlucoseUnit}>
-              <SelectTrigger className="w-[180px]">
-                <SelectValue placeholder="Selecione a unidade" />
-              </SelectTrigger>
-              <SelectContent>
-                <SelectItem value="mg/dL">mg/dL</SelectItem>
-                <SelectItem value="mmol/L">mmol/L</SelectItem>
-              </SelectContent>
-            </Select>
-          </div>
-          <div className="flex items-center justify-between">
-            <Label>Creatinina</Label>
-            <Select value={creatinineUnit} onValueChange={setCreatinineUnit}>
-              <SelectTrigger className="w-[180px]">
-                <SelectValue placeholder="Selecione a unidade" />
-              </SelectTrigger>
-              <SelectContent>
-                <SelectItem value="mg/dL">mg/dL</SelectItem>
-                <SelectItem value="umol/L">µmol/L</SelectItem>
-              </SelectContent>
-            </Select>
-          </div>
-        </CardContent>
-
-        <Separator />
-
-        <CardHeader>
-          <CardTitle>Sobre e Suporte</CardTitle>
-        </CardHeader>
-        <CardContent className="space-y-2">
-           <Button variant="ghost" className="w-full justify-between">
-              <span><Info className="w-4 h-4 mr-2 inline-block" />Informações do Aplicativo</span>
-              <ChevronsRight className="w-4 h-4 text-muted-foreground"/>
-            </Button>
-            <Button variant="ghost" className="w-full justify-between">
-              <span><Bug className="w-4 h-4 mr-2 inline-block" />Reportar um Bug</span>
-               <ChevronsRight className="w-4 h-4 text-muted-foreground"/>
-            </Button>
-        </CardContent>
-
-        <Separator />
-
-        <CardContent className="pt-6">
-          <Button variant="destructive" className="w-full">
-            <LogOut className="w-4 h-4 mr-2" />
-            Sair (Log Out)
-          </Button>
-        </CardContent>
-      </Card>
+      {/* Equipe (Mock Data) */}
+      <section>
+        <h2 className="text-2xl font-semibold mb-4 flex items-center gap-2"><Users /> Minha Equipe</h2>
+        <Card>
+          <CardContent className="pt-6 space-y-4">
+            {teamData.map(member => (
+              <div key={member.id} className="flex items-center justify-between">
+                <div className="flex items-center gap-3">
+                  <div className="w-10 h-10 bg-muted rounded-full flex items-center justify-center">
+                    <User className="w-5 h-5 text-muted-foreground" />
+                  </div>
+                  <div>
+                    <p className="font-semibold">{member.name}</p>
+                    <p className="text-sm text-muted-foreground">{member.level}</p>
+                  </div>
+                </div>
+                <p className="font-mono text-primary font-semibold">{member.points} pts</p>
+              </div>
+            ))}
+          </CardContent>
+        </Card>
+      </section>
     </div>
   );
 }
