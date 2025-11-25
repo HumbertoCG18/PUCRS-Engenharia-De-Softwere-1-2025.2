@@ -1,29 +1,31 @@
-import { Flame, CheckCircle2, Circle, Stethoscope } from 'lucide-react';
+"use client";
+
+import { useAuth } from '@/contexts/AuthContext';
+import { Flame, CheckCircle2, Circle, Stethoscope, Trophy, Activity } from 'lucide-react';
 import { getCases } from '@/lib/cases';
+import { Progress } from "@/components/ui/progress";
+import Link from 'next/link';
 
 export default function PlayerDashboard() {
-  // Dados fictícios para o protótipo
-  const userStats = {
-    level: 5,
-    xp: 150,
-    xpToNextLevel: 500,
-    streak: 4,
-  };
+  const { user, loading } = useAuth();
+  const dailyCase = getCases(); // Em um app real, isso viria de uma lógica de "caso do dia" baseada em data
 
-  const dailyCase = getCases();
-  
-  // Salvaguarda: Se não houver caso do dia, renderiza um estado de "vazio"
-  if (!dailyCase) {
-    return (
-      <div className="w-full bg-card rounded-lg border p-6 text-center">
-        <p className="text-muted-foreground">Nenhum caso do dia disponível no momento.</p>
-      </div>
-    );
+  if (loading) {
+    return <div className="p-8 text-center text-muted-foreground">Carregando dados do plantão...</div>;
   }
 
-  const xpPercentage = (userStats.xp / userStats.xpToNextLevel) * 100;
+  // Fallback para caso o usuário não esteja logado (embora o AuthContext deva proteger)
+  // ou se os dados estiverem incompletos
+  const stats = user?.profileData || {
+    level: 1,
+    xp: 0,
+    xpToNextLevel: 1000,
+    streak: 0
+  };
 
-  // Lógica de progresso da semana (ainda mockada)
+  const xpPercentage = Math.min(100, (stats.xp / stats.xpToNextLevel) * 100);
+
+  // Mock da semana (futuramente virá do histórico do usuário)
   const weekData = [
     { day: 'S', done: true }, { day: 'T', done: true }, { day: 'Q', done: false },
     { day: 'Q', done: false }, { day: 'S', done: false }, { day: 'S', done: false },
@@ -31,62 +33,91 @@ export default function PlayerDashboard() {
   ];
 
   return (
-    <div className="w-full bg-card rounded-lg border">
-      {/* Seção Superior: Nível e Streak */}
-      <div className="p-4 border-b">
-        <div className="flex justify-between items-center gap-4">
-          {/* Nível e XP */}
-          <div className="flex-grow">
-            <div className="flex justify-between items-center mb-1">
-              <span className="font-semibold text-sm">Nível {userStats.level}</span>
-              <span className="text-xs text-foreground/70">{userStats.xp} / {userStats.xpToNextLevel} XP</span>
+    <div className="space-y-6">
+      {/* Card Principal de Status */}
+      <div className="bg-card rounded-xl border shadow-sm overflow-hidden">
+        {/* Cabeçalho com Gradiente Suave */}
+        <div className="bg-primary/5 p-4 border-b flex justify-between items-center">
+          <div className="flex items-center gap-3">
+            <div className="bg-primary/10 p-2 rounded-full">
+              <Trophy className="w-5 h-5 text-primary" />
             </div>
-            <div className="w-full bg-primary/20 rounded-full h-2">
-              <div
-                className="bg-primary rounded-full h-2"
-                style={{ width: `${xpPercentage}%` }}
-              />
-            </div>
-          </div>
-          {/* Streak */}
-          <div className="flex items-center gap-2 flex-shrink-0">
-            <Flame className="w-6 h-6 text-orange-500 animate-pulse" />
             <div>
-              <div className="font-semibold">{userStats.streak}</div>
-              <div className="text-xs text-foreground/70">Dias</div>
+              <p className="text-xs font-medium text-muted-foreground uppercase tracking-wider">Nível {stats.level}</p>
+              <p className="text-sm font-bold">{stats.xp} <span className="text-muted-foreground font-normal">/ {stats.xpToNextLevel} XP</span></p>
             </div>
           </div>
-        </div>
-      </div>
-
-      {/* Seção Principal: Paciente do Dia (Link corrigido para /game/diario) */}
-      <a href="/game/diario" className="block p-4 hover:bg-black/5 dark:hover:bg-white/5 transition-colors">
-        <div className="flex items-start justify-between">
-          <div>
-            <h3 className="text-lg font-bold">Paciente do Dia</h3>
-            <p className="text-sm text-foreground/80 mt-1">{dailyCase.category}</p>
+          
+          <div className="flex items-center gap-2 bg-background/50 px-3 py-1.5 rounded-full border">
+            <Flame className={`w-5 h-5 ${stats.streak > 0 ? 'text-orange-500 fill-orange-500' : 'text-muted-foreground'}`} />
+            <span className="font-bold">{stats.streak}</span>
+            <span className="text-xs text-muted-foreground hidden sm:inline">dias seguidos</span>
           </div>
-          <Stethoscope className="w-8 h-8 text-foreground/30" />
         </div>
-        <p className="text-sm text-foreground/80 mt-2 text-justify">
-          {dailyCase.presentation}
-        </p>
-      </a>
 
-      {/* Seção Inferior: Progresso Semanal */}
-      <div className="p-4 border-t">
-        <h3 className="text-xs font-semibold uppercase text-foreground/60 mb-3">Progresso Semanal</h3>
-        <div className="flex justify-between">
-          {weekData.map((item, index) => (
-            <div key={index} className="flex flex-col items-center gap-2">
-              <span className="text-xs font-mono">{item.day}</span>
-              {item.done ? (
-                <CheckCircle2 className="w-5 h-5 text-green-500" />
-              ) : (
-                <Circle className="w-5 h-5 text-foreground/20" />
-              )}
+        <div className="p-4 space-y-6">
+          {/* Barra de Progresso */}
+          <div className="space-y-2">
+            <div className="flex justify-between text-xs text-muted-foreground">
+              <span>Progresso do Nível</span>
+              <span>{Math.round(xpPercentage)}%</span>
             </div>
-          ))}
+            <Progress value={xpPercentage} className="h-2" />
+          </div>
+
+          {/* Card do Caso do Dia */}
+          {dailyCase ? (
+            <Link href="/game/diario" className="block group">
+              <div className="border rounded-lg p-4 hover:bg-accent/50 hover:border-primary/50 transition-all cursor-pointer relative overflow-hidden">
+                <div className="absolute top-0 right-0 p-3 opacity-10 group-hover:opacity-20 transition-opacity">
+                  <Stethoscope className="w-24 h-24 -mr-8 -mt-8 text-primary" />
+                </div>
+                
+                <div className="relative z-10">
+                  <div className="flex justify-between items-start mb-2">
+                    <span className="inline-flex items-center rounded-full border px-2.5 py-0.5 text-xs font-semibold transition-colors focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 border-transparent bg-primary text-primary-foreground shadow hover:bg-primary/80">
+                      Caso do Dia
+                    </span>
+                    <Activity className="w-4 h-4 text-muted-foreground" />
+                  </div>
+                  
+                  <h3 className="text-lg font-bold mb-1 group-hover:text-primary transition-colors">
+                    {dailyCase.category || "Clínica Médica"}
+                  </h3>
+                  <p className="text-sm text-muted-foreground line-clamp-2">
+                    {dailyCase.presentation}
+                  </p>
+                  
+                  <div className="mt-4 flex items-center text-xs text-primary font-medium">
+                    Resolver Caso <span className="ml-1 transition-transform group-hover:translate-x-1">→</span>
+                  </div>
+                </div>
+              </div>
+            </Link>
+          ) : (
+            <div className="p-6 text-center border rounded-lg border-dashed text-muted-foreground">
+              Nenhum caso disponível no momento.
+            </div>
+          )}
+        </div>
+
+        {/* Rodapé: Progresso Semanal */}
+        <div className="bg-muted/20 p-4 border-t">
+          <div className="flex justify-between items-center">
+            <span className="text-xs font-medium text-muted-foreground">Sua semana</span>
+            <div className="flex gap-2">
+              {weekData.map((item, index) => (
+                <div key={index} className="flex flex-col items-center gap-1">
+                  <span className="text-[10px] text-muted-foreground font-mono">{item.day}</span>
+                  {item.done ? (
+                    <CheckCircle2 className="w-4 h-4 text-green-500" />
+                  ) : (
+                    <Circle className="w-4 h-4 text-muted-foreground/30" />
+                  )}
+                </div>
+              ))}
+            </div>
+          </div>
         </div>
       </div>
     </div>

@@ -1,27 +1,72 @@
-{
-  "id": "user001",
-  "name": "Dr. Humberto Gomes",
-  "level": "R2 - Residente",
-  "points": 3950,
-  "xp": 350,
-  "xpToNextLevel": 1000,
-  "streak": 7,
-  "hospital": "Hospital São Lucas da PUCRS",
-  "badges": [
-    { "name": "Mestre Pulmonar", "description": "Acertou 5 casos de Foco Pulmonar.", "icon": "Wind" },
-    { "name": "Precisão Diagnóstica", "description": "Acertou 10 casos sem erros.", "icon": "Target" },
-    { "name": "Velocista", "description": "Completou o Modo Rápido em menos de 2 minutos.", "icon": "Zap" },
-    { "name": "Semana Perfeita", "description": "Completou o Caso do Dia 7 dias seguidos.", "icon": "Flame" }
-  ],
-  "stats": {
-    "totalCases": 25,
-    "correctDiagnoses": 21,
-    "averageTime": "3:45 min",
-    "performanceByCategory": [
-      { "name": "Pulmonar", "acertos": 5, "total": 6 },
-      { "name": "Urinário", "acertos": 7, "total": 8 },
-      { "name": "Neurológico", "acertos": 4, "total": 5 },
-      { "name": "Abdominal", "acertos": 5, "total": 6 }
-    ]
+[
+  {
+    "id": "user001",
+    "email": "humberto.gomes@email.com",
+    "password": "123",
+    "name": "Dr. Humberto Gomes",
+    "role": "resident",
+    "title": "Residente R2 - Clínica Médica",
+    "avatarUrl": "/avatars/humberto.png",
+    "profileData": {
+      "level": 15,
+      "points": 3950,
+      "xp": 350,
+      "xpToNextLevel": 1000,
+      "streak": 7,
+      "hospital": "Hospital São Lucas da PUCRS",
+      "badges": [
+        { "name": "Mestre Pulmonar", "description": "Acertou 5 casos de Foco Pulmonar.", "icon": "Wind" },
+        { "name": "Precisão Diagnóstica", "description": "Acertou 10 casos sem erros.", "icon": "Target" },
+        { "name": "Velocista", "description": "Completou o Modo Rápido em menos de 2 minutos.", "icon": "Zap" },
+        { "name": "Semana Perfeita", "description": "Completou o Caso do Dia 7 dias seguidos.", "icon": "Flame" }
+      ],
+      "stats": {
+        "totalCases": 25,
+        "correctDiagnoses": 21,
+        "averageTime": "3:45 min",
+        "performanceByCategory": [
+          { "name": "Pulmonar", "acertos": 5, "total": 6 },
+          { "name": "Urinário", "acertos": 7, "total": 8 },
+          { "name": "Neurológico", "acertos": 4, "total": 5 },
+          { "name": "Abdominal", "acertos": 5, "total": 6 }
+        ]
+      }
+    }
+  },
+  {
+    "id": "user002",
+    "email": "carolina.m@email.com",
+    "password": "456",
+    "name": "Dra. Carolina Monteiro",
+    "role": "chief",
+    "title": "Médica Chefe - UTI Geral",
+    "avatarUrl": "/avatars/carolina.png",
+    "profileData": {
+      "level": 42,
+      "points": 15800,
+      "xp": 4500,
+      "xpToNextLevel": 5000,
+      "streak": 45,
+      "hospital": "Hospital São Lucas da PUCRS",
+      "badges": [
+        { "name": "Preceptora de Elite", "description": "Criou e validou 20 casos clínicos.", "icon": "BookOpen" },
+        { "name": "Olho de Águia", "description": "Identificou erro em diagnóstico de residente.", "icon": "Eye" },
+        { "name": "Lenda da UTI", "description": "Mais de 1000 horas de simulação.", "icon": "Crown" },
+        { "name": "Mentora", "description": "Ajudou 5 residentes a subirem de nível.", "icon": "Users" }
+      ],
+      "stats": {
+        "totalCases": 150,
+        "correctDiagnoses": 148,
+        "averageTime": "1:30 min",
+        "performanceByCategory": [
+          { "name": "Pulmonar", "acertos": 40, "total": 40 },
+          { "name": "Urinário", "acertos": 35, "total": 35 },
+          { "name": "Neurológico", "acertos": 28, "total": 30 },
+          { "name": "Abdominal", "acertos": 45, "total": 45 }
+        ],
+        "residentsSupervised": 12,
+        "pendingReviews": 3
+      }
+    }
   }
-}
+]

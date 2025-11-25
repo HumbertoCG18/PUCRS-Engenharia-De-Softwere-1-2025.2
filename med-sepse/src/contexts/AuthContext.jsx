@@ -2,7 +2,7 @@
 
 import { createContext, useContext, useState, useEffect } from 'react';
 import { useRouter, usePathname } from 'next/navigation';
-import usersData from '@/data/users.json';
+import usersData from '@/data/users.json'; // Certifique-se que este caminho está correto
 
 const AuthContext = createContext(null);
 
@@ -13,7 +13,7 @@ export function AuthProvider({ children }) {
   const pathname = usePathname();
 
   useEffect(() => {
-    // Simula verificação de sessão ao carregar
+    // 1. Carrega usuário do storage ao iniciar
     const storedUser = localStorage.getItem('medseps_user');
     if (storedUser) {
       setUser(JSON.parse(storedUser));
@@ -22,12 +22,18 @@ export function AuthProvider({ children }) {
   }, []);
 
   useEffect(() => {
-    // Proteção de rotas: Redireciona para login se não autenticado
-    const publicPaths = ['/login', '/register'];
-    const isPublicPath = publicPaths.includes(pathname);
+    // 2. Segurança de Rota: Executa sempre que a rota (pathname) ou o status de load mudar
+    if (loading) return; // Não faz nada enquanto carrega
 
-    if (!loading && !user && !isPublicPath) {
+    const publicRoutes = ['/login', '/register'];
+    const isPublicRoute = publicRoutes.includes(pathname);
+
+    if (!user && !isPublicRoute) {
+      // Se NÃO tem usuário e a rota NÃO é pública -> Bloqueia e manda pro login
       router.push('/login');
+    } else if (user && isPublicRoute) {
+      // (Opcional) Se JÁ tem usuário e tenta ir pro login -> Manda pra home
+      router.push('/');
     }
   }, [user, loading, pathname, router]);
 
@@ -43,42 +49,19 @@ export function AuthProvider({ children }) {
     return { success: false, message: 'Credenciais inválidas.' };
   };
 
-  const register = (newUser) => {
-    // Simulação de registro: Adiciona ao estado local (não persistirá no JSON real)
-    // Em um app real, isso seria uma chamada de API
-    const userWithId = { 
-        ...newUser, 
-        id: `user${Date.now()}`,
-        profileData: {
-            level: 1,
-            points: 0,
-            xp: 0,
-            xpToNextLevel: 500,
-            streak: 0,
-            badges: [],
-            stats: {
-                totalCases: 0,
-                correctDiagnoses: 0,
-                averageTime: "0:00",
-                performanceByCategory: []
-            }
-        }
-    };
-    
-    setUser(userWithId);
-    localStorage.setItem('medseps_user', JSON.stringify(userWithId));
-    router.push('/');
-    return { success: true };
-  };
-
   const logout = () => {
     setUser(null);
     localStorage.removeItem('medseps_user');
     router.push('/login');
   };
 
+  // ... (função register igual)
+
   return (
-    <AuthContext.Provider value={{ user, loading, login, logout, register }}>
+    <AuthContext.Provider value={{ user, loading, login, logout }}>
+      {/* Só mostra o app (children) se não estiver carregando 
+         ISSO EVITA O "PISCAR" DA TELA PROTEGIDA ANTES DE REDIRECIONAR
+      */}
       {!loading && children}
     </AuthContext.Provider>
   );
