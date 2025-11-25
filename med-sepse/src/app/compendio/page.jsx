@@ -30,7 +30,7 @@ export default function CompendioPage() {
     }
   }, []);
 
-  const categories = ["Todos", ...new Set(articles.map(a => a.category || "Geral"))];
+  const categories = ["Todos", "Mais Vistos", "Mais Recentes"];
 
   const handleNewUpload = (newArticle) => {
     const updatedList = [newArticle, ...articles];
