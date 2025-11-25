@@ -8,11 +8,16 @@ import { cn } from "@/lib/utils";
 export default function BottomNav() {
   const pathname = usePathname();
 
-  // Lista de rotas onde a navegação NUNCA deve aparecer (Login e Registro)
+  // Lista de rotas onde a navegação NUNCA deve aparecer
   const hiddenRoutes = ['/login', '/register'];
 
-  // Se o pathname atual for uma das rotas proibidas, não renderiza nada (retorna null)
-  if (hiddenRoutes.includes(pathname)) {
+  // CORREÇÃO: Verifica se o pathname atual corresponde a alguma rota oculta,
+  // considerando que pode ou não ter uma barra "/" no final.
+  const shouldHide = hiddenRoutes.some(route => 
+    pathname === route || pathname === `${route}/`
+  );
+
+  if (shouldHide) {
     return null;
   }
 
@@ -24,11 +29,12 @@ export default function BottomNav() {
   ];
 
   return (
-    // REMOVI O 'md:hidden' DAQUI PARA APARECER NO DESKTOP TAMBÉM
     <div className="fixed bottom-0 left-0 right-0 border-t bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 z-50">
       <nav className="flex justify-around items-center h-16">
         {navItems.map(({ href, icon: Icon, label }) => {
-          const isActive = pathname === href;
+          // Ajuste também a lógica de "ativo" para lidar com a barra extra
+          const isActive = pathname === href || pathname === `${href}/`;
+          
           return (
             <Link
               key={href}
